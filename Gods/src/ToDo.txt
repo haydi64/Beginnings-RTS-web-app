@@ -1,0 +1,16 @@
+Alpha Version
+
+Board
+	create 10x10 empty board		DONE
+	each square is same terrain		DONE
+	
+Unit
+	Two units, spear and sword		DONE
+	can move to empty spaces		DONE
+	units have move limit both == 7
+	cannot move onto same color unit
+	when moved onto enemy color, attack
+	
+Players
+	red vs blue
+	all enemies are dead == victory
