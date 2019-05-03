@@ -14,10 +14,6 @@ public class Board
 		this.rows = rows;
 		this.columns = columns;
 		map = new HashMap<Square, Unit>();
-
-//		for (int i = 0; i < rows; i++)
-//			for (int j = 0; j < columns; j++)
-//				map.put(new Square(i, j), new Unit(UnitType.NONE));
 	}
 	
 	public void addUnit(int row, int column, Unit unit)
