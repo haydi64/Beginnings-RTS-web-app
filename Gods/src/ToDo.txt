@@ -8,9 +8,11 @@ Unit
 	Two units, spear and sword		DONE
 	can move to empty spaces		DONE
 	units have move limit both == 7		DONE
-	cannot move onto same color unit
-	when moved onto enemy color, attack
+	cannot move onto same color unit		DONE
+	when moved onto enemy color, attack		DONE
 	
 Players
-	red vs blue
-	all enemies are dead == victory
+	red vs blue		DONE
+	all enemies are dead == victory		DONE
+	
+	Need tests

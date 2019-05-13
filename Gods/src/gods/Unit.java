@@ -1,39 +1,97 @@
 package gods;
 
-public class Unit
-{
+public class Unit extends GameObject {
 
-	private final UnitType type;
-	private UnitColor color;
-	private int moveLimit;
+	protected int moveLimit, range;
+	protected double hunger;
+	protected boolean hasAttacked, hasMoved;
 
-	public Unit(UnitType type, UnitColor color)
-	{
-		this.type = type;
-		this.color = color;
+	public Unit(GameType type, PlayerColor color) {
+		super(type, color);
+		this.setActions(Actions.Move, Actions.Attack);
 		this.moveLimit = 7;
-	}
-	
-	public UnitType getType() { return this.type; }
-	public UnitColor getColor() { return this.color; }
-	
-	public void print()
-	{
-		System.out.print(type.toString() + " ");
+		this.range = 1;
+		this.hunger = 1.0;
+		this.hasAttacked = false;
+		this.hasMoved = false;
 	}
 
-	public int getMoveLimit()
-	{
+	@Override
+	public AttackResult attack(Unit defender) {
+		AttackResult result = AttackResult.BothAlive;
+		double attackBonus = 1;// unitClass.getBonus(defender.unitClass) + 1;
+		double defenseBonus = 1;// defender.currentTile.getDefenseBonus() + 1;
+		double counterAtkBonus = 1;// defender.unitClass.getBonus(unitClass) + 1;
+		// counter defense bounus?
+
+		double attackDMG = attackConst * (attackBonus * calcAttackStrength())
+				/ (defender.calcDefenseStrength() * defenseBonus);
+		double defenseDMG = counterAtkBonus * defenseConst * defender.calcAttackStrength() / calcDefenseStrength();
+		defender.takeDamage(Math.toIntExact(Math.round(attackDMG)));
+		defender.printHealth();
+		if (defender.canCounterAttack()) // If defender can counter attack
+		{
+			if (defender.isDead()) {
+				result = AttackResult.DefenderDead;
+				while (defenseDMG > healthyUnits)
+					defenseDMG = defenseDMG / 2;
+			}
+			this.takeDamage(Math.toIntExact(Math.round(defenseDMG)));
+			if(this.isDead())
+				result = AttackResult.AttackerDead;
+		}
+		this.printHealth();
+		
+		return result;
+	}
+
+	public int getMoveLimit() {
 		return this.moveLimit;
 	}
-}
 
-enum UnitType
-{
-	SWORD, SPEAR
-}
+	public int getRange() {
+		return this.range;
+	}
+	
+	public boolean hasAttacked()
+	{
+		return this.hasAttacked;
+	}
+	
+	public void setAttacked(boolean bool)
+	{
+		this.hasAttacked = bool;
+	}
+	
+	public boolean hasMoved()
+	{
+		return this.hasMoved;
+	}
+	
+	public void setMoved(boolean bool)
+	{
+		this.hasMoved = bool;
+	}
 
-enum UnitColor
-{
-	RED, BLUE
+	@Override
+	public double calcDefenseStrength() {
+		// add bonuses and hunger
+		return defenseRating * healthyFactor();
+	}
+
+	@Override
+	public double calcAttackStrength() {
+		// add bonuses and hunger
+		return attackRating * healthyFactor();
+	}
+	
+	@Override
+	protected boolean canCounterAttack() {
+		return true;
+	}
+
+	@Override
+	public Unit train(GameType type) {
+		return null;
+	}
 }
