@@ -6,16 +6,16 @@ import java.util.List;
 
 public class GameState {
 	private List<PlayerColor> players;
-	private List<List<Unit>> units;
+	private List<List<GameObject>> gameObjects;
 	private int turnNumber;
 	private int currentPlayer;
 	
 	public GameState(PlayerColor ...colors)
 	{
 		players = new ArrayList<PlayerColor>(Arrays.asList(colors));
-		units = new ArrayList<List<Unit>>();
+		gameObjects = new ArrayList<List<GameObject>>();
 		for(PlayerColor color: players)
-			units.add(new ArrayList<Unit>());
+			gameObjects.add(new ArrayList<GameObject>());
 		currentPlayer = 0;
 		turnNumber = 1;
 	}
@@ -28,24 +28,29 @@ public class GameState {
 			turnNumber++;
 		}
 		int index = players.indexOf(getCurrentPlayer());
-		for(Unit unit: units.get(index))
+		for(GameObject gObject: gameObjects.get(index))
 		{
-			unit.setAttacked(false);
-			unit.setMoved(false);
+			if(gObject.getType().isUnit())
+			{
+				Unit unit = (Unit) gObject;
+				unit.setAttacked(false);
+				unit.setMoved(false);
+				
+			}
 		}
 		return getCurrentPlayer();
 	}
 	
-	public void addUnit(Unit unit) {
-		PlayerColor color = unit.getColor();
+	public void addGameObject(GameObject gameObject) {
+		PlayerColor color = gameObject.getColor();
 		int index = players.indexOf(color);
-		units.get(index).add(unit);
+		gameObjects.get(index).add(gameObject);
 	}
 	
-	public void removeUnit(Unit unit) {
-		PlayerColor color = unit.getColor();
+	public void removeGameObject(GameObject gameObject) {
+		PlayerColor color = gameObject.getColor();
 		int index = players.indexOf(color);
-		units.get(index).remove(unit);
+		gameObjects.get(index).remove(gameObject);
 	}
 	
 	public boolean hasPlayerLost()
@@ -68,14 +73,14 @@ public class GameState {
 	public int getNumberOfUnits(PlayerColor color)
 	{
 		int index = players.indexOf(color);
-		return units.get(index).size();
+		return gameObjects.get(index).size();
 	}
 	
 	public void playerLoses(PlayerColor color)
 	{
 		int index = players.indexOf(color);
 		players.remove(color);
-		units.remove(index);
+		gameObjects.remove(index);
 	}
 	
 	public int playersLeft()

@@ -31,8 +31,6 @@ class Test1 {
 	void moveUnit() {
 		testGame.moveUnit(0, 0, 1, 0);
 		assertEquals(testBoard.getUnitAt(1, 0).getType(), GameType.SPEAR);
-
-		testBoard.printBoard();
 	}
 
 	@Test
@@ -119,6 +117,35 @@ class Test1 {
 		testGame.endTurn();
 		assertNull(testGame.getBoard().getUnitAt(1, 0));
 		System.out.println("---------End Battle1--------");
+	}
+	
+	@Test
+	void testVillagerActions()
+	{
+		Villager v = new Villager(PlayerColor.RED);
+		assertEquals(1, v.getActions().size());
+	}
+	
+	@Test
+	void testBuildings()
+	{
+		testBoard.setBuilding(0, 0, new Building(GameType.TOWN_HALL, PlayerColor.RED));
+		assertEquals(GameType.TOWN_HALL, testBoard.getBuildingAt(0, 0).getType());
+	}
+	
+	@Test
+	void testGameBuilding()
+	{
+//		testGame.addBuilding(0, 0, new Building(GameType.TOWN_HALL, PlayerColor.RED));
+//		testGame.printBoard();
+		testGame.addUnit(2, 2, new Villager(PlayerColor.RED));
+		testGame.build(2, 2, GameType.TOWN_HALL);
+		testGame.endTurn();
+		testGame.endTurn();
+		testGame.moveUnit(2, 2, 2, 4);
+		testGame.printBoard();
+		testGame.train(2, 2, GameType.VILLAGER);
+		assertEquals(GameType.VILLAGER, testGame.getBoard().getUnitAt(2, 2).getType());
 	}
 
 }

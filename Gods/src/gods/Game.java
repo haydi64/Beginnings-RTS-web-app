@@ -36,15 +36,34 @@ public class Game {
 			if (result == AttackResult.AttackerDead)
 			{
 				theBoard.setUnit(fromRow, fromColumn, null);
-				state.removeUnit(fromUnit);
+				state.removeGameObject(fromUnit);
 			} else if (result == AttackResult.DefenderDead)
 			{
 				theBoard.setUnit(toRow, toColumn, null);
-				state.removeUnit(toUnit);
+				state.removeGameObject(toUnit);
 			}
 			fromUnit.setAttacked(true);
 		} catch (InvalidMoveException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void build(int row, int column, GameType gameType)
+	{
+		Unit unit = theBoard.getUnitAt(row, column);
+		if(MoveValidator.buildIsValid(row, column, theBoard))
+		{
+			addBuilding(row, column, unit.build(gameType));
+			unit.setAttacked(true);
+			unit.setMoved(true);
+		}
+	}
+
+	public void train(int row, int column, GameType gType)
+	{
+		Building building = theBoard.getBuildingAt(row, column);
+		if(MoveValidator.trainIsValid(row, column, theBoard)) {
+			addUnit(row, column, building.train(gType));
 		}
 	}
 
@@ -59,7 +78,13 @@ public class Game {
 	
 	public void addUnit(int row, int column, Unit unit) {
 		theBoard.setUnit(row, column, unit);
-		state.addUnit(unit);
+		state.addGameObject(unit);
+	}
+	
+	public void addBuilding(int row, int column, Building building)
+	{
+		theBoard.setBuilding(row, column, building);
+		state.addGameObject(building);
 	}
 	
 	public void gameOver()

@@ -1,48 +1,69 @@
 package gods;
 
-public class Building extends GameObject{
+import java.util.ArrayList;
+import java.util.List;
 
-	public Building(GameType type, PlayerColor color) {
+public class Building extends GameObject
+{
+	private List<GameType> listOfUnits;
+
+	public Building(GameType type, PlayerColor color)
+	{
 		super(type, color);
 		this.setActions(Actions.Train);
+		listOfUnits = new ArrayList<GameType>();
+		setStats();
 	}
-	
-	public Unit train(GameType gameType) {
-		Unit unit;
-		switch(type)
-		{
-		case TOWN_HALL:
-			unit = new Unit(GameType.VILLAGER, color);
-			break;
-		case BARRACKS:
-			unit = new Unit(gameType, color);
-			break;
-		default:
-			unit = null;
-			break;
+
+	private void setStats()
+	{
+		switch (type) {
+			case TOWN_HALL:
+//				this.defenseRating = 200;
+				listOfUnits.add(GameType.VILLAGER);
+				break;
+			case BARRACKS:
+//				this.defenseRating = 175;
+				listOfUnits.add(GameType.SPEAR);
+				listOfUnits.add(GameType.SWORD);
+				break;
+			default:
+				break;
 		}
+	}
+
+	public Unit train(GameType gameType)
+	{
+		Unit unit;
+		if(listOfUnits.contains(gameType))
+			unit = new Unit(gameType, color);
+		else unit = null;
 		return unit;
 	}
-	
+
 	@Override
-	public double calcDefenseStrength() {
+	public double calcDefenseStrength()
+	{
 		return defenseRating;
 	}
 
 	@Override
-	public double calcAttackStrength() {
+	public double calcAttackStrength()
+	{
 		return 0;
 	}
-	
+
 	@Override
-	protected boolean canCounterAttack() {
+	protected boolean canCounterAttack()
+	{
 		return false;
 	}
 
 	@Override
-	public AttackResult attack(Unit defender) {
+	public AttackResult attack(Unit defender)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
