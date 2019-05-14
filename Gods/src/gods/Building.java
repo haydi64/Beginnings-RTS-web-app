@@ -5,13 +5,14 @@ import java.util.List;
 public class Building extends GameObject
 {
 	private List<GameType> listOfUnits;
-	private int resourceBonus;
+	private int goldBonus, foodBonus;
 
 	public Building(GameType type, PlayerColor color)
 	{
 		super(type, color);
 		listOfUnits = Rules.getTrainableUnits(type);
-		resourceBonus = Rules.getResourceBonus(type);
+		this.goldBonus = Rules.getGoldBonus(type);
+		this.foodBonus = Rules.getFoodBonus(type);
 	}
 
 	public Unit train(GameType gameType)
@@ -23,9 +24,14 @@ public class Building extends GameObject
 		return unit;
 	}
 	
-	public int getResourceBonus()
+	public int getFoodBonus()
 	{
-		return this.resourceBonus;
+		return this.foodBonus;
+	}
+	
+	public int getGoldBonus()
+	{
+		return this.goldBonus;
 	}
 
 	@Override

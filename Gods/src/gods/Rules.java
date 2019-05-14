@@ -89,12 +89,26 @@ public class Rules
 		return trainableUnits;
 	}
 
-	public static int getResourceBonus(GameType type)
+	public static int getFoodBonus(GameType type)
 	{
 		int bonus;
 		switch (type) {
-			case MINE:
+			case TOWN_HALL:
 			case FARM:
+				bonus = 100;
+				break;
+			default:
+				bonus = 0;
+		}
+		return bonus;
+	}
+
+	public static int getGoldBonus(GameType type)
+	{
+		int bonus;
+		switch (type) {
+			case TOWN_HALL:
+			case MINE:
 				bonus = 100;
 				break;
 			default:
