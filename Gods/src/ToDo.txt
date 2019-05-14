@@ -7,10 +7,20 @@ Board
 Unit
 	Two units, spear and sword		DONE
 	can move to empty spaces		DONE
-	units have move limit both == 7
-	cannot move onto same color unit
-	when moved onto enemy color, attack
+	units have move limit both == 7		DONE
+	cannot move onto same color unit		DONE
+	when moved onto enemy color, attack		DONE
 	
 Players
-	red vs blue
-	all enemies are dead == victory
+	red vs blue		DONE
+	all enemies are dead == victory		DONE
+	all buildings and enemies are dead == victory
+	
+add Resource buildings that give gold/food	DONE
+use gold/food to train/build
+if not enough gold/food then cannot build/train
+buildings can be built anywhere in this version
+
+Refactoring
+	add rules class that holds all the values of things like def and atk		DONE
+	add gameobject factory to create objects
