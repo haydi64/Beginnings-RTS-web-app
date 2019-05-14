@@ -35,7 +35,6 @@ public class GameState {
 				Unit unit = (Unit) gObject;
 				unit.setAttacked(false);
 				unit.setMoved(false);
-				
 			}
 		}
 		return getCurrentPlayer();

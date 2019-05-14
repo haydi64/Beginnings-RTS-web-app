@@ -88,4 +88,18 @@ public class Rules
 		}
 		return trainableUnits;
 	}
+
+	public static int getResourceBonus(GameType type)
+	{
+		int bonus;
+		switch (type) {
+			case MINE:
+			case FARM:
+				bonus = 100;
+				break;
+			default:
+				bonus = 0;
+		}
+		return bonus;
+	}
 }

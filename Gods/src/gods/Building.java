@@ -11,6 +11,7 @@ public class Building extends GameObject
 	{
 		super(type, color);
 		listOfUnits = Rules.getTrainableUnits(type);
+		resourceBonus = Rules.getResourceBonus(type);
 	}
 
 	public Unit train(GameType gameType)
@@ -20,6 +21,11 @@ public class Building extends GameObject
 			unit = new Unit(gameType, color);
 		else unit = null;
 		return unit;
+	}
+	
+	public int getResourceBonus()
+	{
+		return this.resourceBonus;
 	}
 
 	@Override
