@@ -14,5 +14,13 @@ Unit
 Players
 	red vs blue		DONE
 	all enemies are dead == victory		DONE
+	all buildings and enemies are dead == victory
 	
-	Need tests
+add Resourcebuildings that give gold/food
+use gold/food to train/build
+if not enough gold/food then cannot build/train
+buildings can be built anywhere in this version
+
+Refactoring
+	add rules class that holds all the values of things like def and atk
+	add gameobject factory to create objects

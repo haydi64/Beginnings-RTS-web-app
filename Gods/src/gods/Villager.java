@@ -6,13 +6,11 @@ public class Villager extends Unit {
 
 	public Villager(PlayerColor color) {
 		super(GameType.VILLAGER, color);
-		this.actions = new ArrayList<Actions>();
-		this.setActions(Actions.Build);
 	}
 
 	public Villager(GameType type, PlayerColor color) {
 		super(GameType.VILLAGER, color);
-		this.setActions(Actions.Build);
+		this.addActions(Actions.Build);
 	}
 	
 	@Override

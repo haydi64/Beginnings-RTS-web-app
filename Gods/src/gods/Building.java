@@ -1,35 +1,16 @@
 package gods;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Building extends GameObject
 {
 	private List<GameType> listOfUnits;
+	private int resourceBonus;
 
 	public Building(GameType type, PlayerColor color)
 	{
 		super(type, color);
-		this.setActions(Actions.Train);
-		listOfUnits = new ArrayList<GameType>();
-		setStats();
-	}
-
-	private void setStats()
-	{
-		switch (type) {
-			case TOWN_HALL:
-//				this.defenseRating = 200;
-				listOfUnits.add(GameType.VILLAGER);
-				break;
-			case BARRACKS:
-//				this.defenseRating = 175;
-				listOfUnits.add(GameType.SPEAR);
-				listOfUnits.add(GameType.SWORD);
-				break;
-			default:
-				break;
-		}
+		listOfUnits = Rules.getTrainableUnits(type);
 	}
 
 	public Unit train(GameType gameType)

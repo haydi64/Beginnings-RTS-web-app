@@ -1,0 +1,25 @@
+Game Rules:
+
+
+Units:
+	Can move and then either attack or build if possible
+	List of units
+		spear, sword, villager
+	Most units can attack
+		Spear, sword, villager
+	Most can counter attack
+		spear, sword, villager
+	Villagers can build 
+		TH, Barracks
+		
+Buildings:
+	list:
+		Town hall, barracks, Mine, Farm
+	Buildings can train units
+	Mine and farm can be place anywhere (for now)
+		give +100 resource per turn
+	
+	
+Resources:
+	Food, Gold
+	Needed to build and train units

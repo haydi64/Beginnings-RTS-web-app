@@ -21,6 +21,8 @@ public class MoveValidator
 					"From unit was null at position " + fromRow + ", " + fromColumn);
 		if (fromUnit.getColor() != color)
 			throw new InvalidMoveException("Tried to move a piece, not their own");
+		if(!fromUnit.getActions().contains(Actions.Move))
+			throw new InvalidMoveException("No actions");
 		if (fromUnit.getMoveLimit() < from.getManDistance(to))
 			throw new InvalidMoveException(
 					"Tried to move a distance of " + from.getManDistance(to));
@@ -45,6 +47,8 @@ public class MoveValidator
 			throw new InvalidMoveException("Invalid squares");
 		if (fromUnit == null || toUnit == null)
 			throw new InvalidMoveException("Must have a unit attack another unit");
+		if (!fromUnit.getActions().contains(Actions.Attack))
+			throw new InvalidMoveException("Cannot attack");
 		if (fromUnit.getColor() != color)
 			throw new InvalidMoveException(
 					"Tried to attack with a piece, not their own");

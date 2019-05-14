@@ -123,7 +123,7 @@ class Test1 {
 	void testVillagerActions()
 	{
 		Villager v = new Villager(PlayerColor.RED);
-		assertEquals(1, v.getActions().size());
+		assertEquals(3, v.getActions().size());
 	}
 	
 	@Test

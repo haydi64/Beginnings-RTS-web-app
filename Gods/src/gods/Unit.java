@@ -8,7 +8,6 @@ public class Unit extends GameObject {
 
 	public Unit(GameType type, PlayerColor color) {
 		super(type, color);
-		this.setActions(Actions.Move, Actions.Attack);
 		this.moveLimit = 7;
 		this.range = 1;
 		this.hunger = 1.0;
@@ -24,16 +23,16 @@ public class Unit extends GameObject {
 		double counterAtkBonus = 1;// defender.unitClass.getBonus(unitClass) + 1;
 		// counter defense bounus?
 
-		double attackDMG = attackConst * (attackBonus * calcAttackStrength())
+		double attackDMG = Rules.attackConst * (attackBonus * calcAttackStrength())
 				/ (defender.calcDefenseStrength() * defenseBonus);
-		double defenseDMG = counterAtkBonus * defenseConst * defender.calcAttackStrength() / calcDefenseStrength();
+		double defenseDMG = counterAtkBonus * Rules.defenseConst * defender.calcAttackStrength() / calcDefenseStrength();
 		defender.takeDamage(Math.toIntExact(Math.round(attackDMG)));
 		defender.printHealth();
 		if (defender.canCounterAttack()) // If defender can counter attack
 		{
 			if (defender.isDead()) {
 				result = AttackResult.DefenderDead;
-				while (defenseDMG > healthyUnits)
+				while (defenseDMG > health)
 					defenseDMG = defenseDMG / 2;
 			}
 			this.takeDamage(Math.toIntExact(Math.round(defenseDMG)));
