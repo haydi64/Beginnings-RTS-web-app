@@ -35,6 +35,7 @@ public class Player
 
 	public void newTurn()
 	{
+		//
 		for (GameObject gObject : objects) {
 			if (gObject.getType().isUnit()) {
 				Unit unit = (Unit) gObject;
