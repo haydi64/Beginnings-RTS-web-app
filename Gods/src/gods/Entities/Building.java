@@ -1,6 +1,8 @@
-package gods;
+package gods.Entities;
 
 import java.util.List;
+import gods.Game.PlayerColor;
+import gods.Game.Rules;
 
 public class Building extends GameObject
 {

@@ -2,6 +2,11 @@ package gods;
 
 import java.io.IOException;
 import java.util.Scanner;
+import gods.Board.Board;
+import gods.Entities.GameType;
+import gods.Entities.Unit;
+import gods.Game.Game;
+import gods.Game.PlayerColor;
 
 public class Main {
 

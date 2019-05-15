@@ -7,6 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import gods.Board.Board;
+import gods.Board.Terrain;
+import gods.Entities.Building;
+import gods.Entities.GameType;
+import gods.Entities.Unit;
+import gods.Entities.Villager;
+import gods.Game.Game;
+import gods.Game.MoveValidator;
+import gods.Game.PlayerColor;
 
 class Test1 {
 	Board testBoard;

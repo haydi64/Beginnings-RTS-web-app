@@ -1,8 +1,9 @@
-package gods;
+package gods.Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import gods.Entities.GameObject;
 
 public class GameState
 {

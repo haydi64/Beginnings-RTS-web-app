@@ -1,6 +1,8 @@
-package gods;
+package gods.Entities;
 
 import java.util.List;
+import gods.Game.PlayerColor;
+import gods.Game.Rules;
 
 public abstract class GameObject
 {
@@ -99,31 +101,4 @@ public abstract class GameObject
 		System.out.println(color.toString() + " " + type.toString() + ": "
 				+ this.health + "/" + this.totalHealth);
 	}
-}
-
-enum GameType
-{
-	SWORD(true), SPEAR(true), VILLAGER(true), TOWN_HALL(false), BARRACKS(false), MINE(false), FARM(false);
-
-	private final boolean unit;
-
-	GameType(boolean unit)
-	{
-		this.unit = unit;
-	}
-
-	public boolean isUnit()
-	{
-		return unit;
-	}
-}
-
-enum AttackResult
-{
-	AttackerDead, DefenderDead, BothAlive
-}
-
-enum Actions
-{
-	Move, Attack, Build, Train
 }

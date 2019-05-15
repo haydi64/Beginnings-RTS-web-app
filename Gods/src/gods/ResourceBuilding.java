@@ -1,5 +1,11 @@
 package gods;
 
+import gods.Entities.AttackResult;
+import gods.Entities.GameObject;
+import gods.Entities.GameType;
+import gods.Entities.Unit;
+import gods.Game.PlayerColor;
+
 public class ResourceBuilding extends GameObject
 {
 

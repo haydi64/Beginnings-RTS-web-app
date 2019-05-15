@@ -1,4 +1,11 @@
-package gods;
+package gods.Game;
+
+import gods.InvalidMoveException;
+import gods.Board.Board;
+import gods.Entities.AttackResult;
+import gods.Entities.Building;
+import gods.Entities.GameType;
+import gods.Entities.Unit;
 
 public class Game
 {

@@ -1,7 +1,9 @@
-package gods;
+package gods.Board;
 
 import java.util.HashMap;
 import java.util.Map;
+import gods.Entities.Building;
+import gods.Entities.Unit;
 
 public class Board {
 

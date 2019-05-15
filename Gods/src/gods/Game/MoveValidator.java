@@ -1,4 +1,12 @@
-package gods;
+package gods.Game;
+
+import gods.InvalidMoveException;
+import gods.Board.Board;
+import gods.Board.Square;
+import gods.Entities.Actions;
+import gods.Entities.Building;
+import gods.Entities.GameType;
+import gods.Entities.Unit;
 
 public class MoveValidator
 {
