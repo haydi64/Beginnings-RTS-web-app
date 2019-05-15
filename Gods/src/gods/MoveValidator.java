@@ -61,20 +61,22 @@ public class MoveValidator
 			throw new InvalidMoveException("Unit has already attacked");
 	}
 
-	public static boolean buildIsValid(int row, int column, Board board)
+	public static boolean buildIsValid(int row, int column, Board board, GameType type, Player player)
 	{
 		Unit unit = board.getUnitAt(row, column);
 		Building building = board.getBuildingAt(row, column);
+		int[] cost = Rules.getObjectCost(type);
 		return unit != null && building == null
 				&& unit.getActions().contains(Actions.Build)
-				&& unit.hasAttacked() == false;
+				&& unit.hasAttacked() == false && player.canAfford(cost[0], cost[1]);
 	}
 
-	public static boolean trainIsValid(int row, int column, Board theBoard)
+	public static boolean trainIsValid(int row, int column, Board theBoard, GameType type, Player player)
 	{
 		Unit unit = theBoard.getUnitAt(row, column);
 		Building building = theBoard.getBuildingAt(row, column);
-		return unit == null && building != null;
+		int[] cost = Rules.getObjectCost(type);
+		return unit == null && building != null && player.canAfford(cost[0], cost[1]);
 	}
 
 }

@@ -116,4 +116,49 @@ public class Rules
 		}
 		return bonus;
 	}
+
+	public static int[] getObjectCost(GameType type)
+	{
+		int gold, food;
+
+		switch (type) {
+			case SPEAR:
+				gold = 100;
+				food = 100;
+				break;
+			case SWORD:
+				gold = 100;
+				food = 100;
+				break;
+			case VILLAGER:
+				gold = 25;
+				food = 75;
+				break;
+			case MINE:
+				gold = 100;
+				food = 125;
+				break;
+			case FARM:
+				gold = 125;
+				food = 100;
+				break;
+			case TOWN_HALL:
+				gold = 200;
+				food = 200;
+				break;
+			case BARRACKS:
+				gold = 175;
+				food = 175;
+				break;
+			default:
+				gold = 0;
+				food = 0;
+				break;
+		}
+
+		int[] values = new int[2];
+		values[0] = gold;
+		values[1] = food;
+		return values;
+	}
 }

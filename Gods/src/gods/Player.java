@@ -13,8 +13,8 @@ public class Player
 	public Player(PlayerColor color)
 	{
 		this.color = color;
-		gold = 0;
-		food = 0;
+		gold = 350;
+		food = 350;
 		objects = new ArrayList<GameObject>();
 	}
 
@@ -52,6 +52,31 @@ public class Player
 	public int objectsLeft()
 	{
 		return objects.size();
+	}
+	
+	public boolean canAfford(int goldCost, int foodCost)
+	{
+		return gold >= goldCost && food >= foodCost;
+	}
+	
+	public int getFood()
+	{
+		return this.food;
+	}
+	
+	public void addFood(int value)
+	{
+		food += value;
+	}
+	
+	public int getGold()
+	{
+		return this.gold;
+	}
+	
+	public void addGold(int value)
+	{
+		gold += value;
 	}
 
 }

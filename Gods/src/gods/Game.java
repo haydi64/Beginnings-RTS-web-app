@@ -54,7 +54,7 @@ public class Game
 	public void build(int row, int column, GameType gameType)
 	{
 		Unit unit = theBoard.getUnitAt(row, column);
-		if (MoveValidator.buildIsValid(row, column, theBoard)) {
+		if (MoveValidator.buildIsValid(row, column, theBoard, gameType, state.getCurrentPlayer())) {
 			addBuilding(row, column, unit.build(gameType));
 			unit.setAttacked(true);
 			unit.setMoved(true);
@@ -64,7 +64,7 @@ public class Game
 	public void train(int row, int column, GameType gType)
 	{
 		Building building = theBoard.getBuildingAt(row, column);
-		if (MoveValidator.trainIsValid(row, column, theBoard)) {
+		if (MoveValidator.trainIsValid(row, column, theBoard, gType, state.getCurrentPlayer())) {
 			addUnit(row, column, building.train(gType));
 		}
 	}
