@@ -1,7 +1,10 @@
 package gods.Game;
 
+import java.awt.Graphics;
+import gods.Direction;
 import gods.InvalidMoveException;
 import gods.Board.Board;
+import gods.Board.Square;
 import gods.Entities.AttackResult;
 import gods.Entities.Building;
 import gods.Entities.GameType;
@@ -17,6 +20,16 @@ public class Game
 	{
 		theBoard = board;
 		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
+	}
+
+	public Game()
+	{
+		theBoard = new Board(20, 20);
+		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
+		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
+		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
+		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
+		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
 
 	public void moveUnit(int fromRow, int fromColumn, int toRow, int toColumn)
@@ -113,5 +126,20 @@ public class Game
 	public Board getBoard()
 	{
 		return theBoard;
+	}
+
+	public void render(Graphics g)
+	{
+		theBoard.render(g);
+	}
+
+	public Square getSelectedSquare()
+	{
+		return theBoard.getSelectedSquare();
+	}
+
+	public void changeSelectedTile(Direction dir)
+	{
+		theBoard.changeSelectedTile(dir);
 	}
 }

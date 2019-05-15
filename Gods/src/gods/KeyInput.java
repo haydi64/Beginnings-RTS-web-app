@@ -1,0 +1,44 @@
+package gods;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import gods.Game.Game;
+
+public class KeyInput implements KeyListener
+{
+	private Game game;
+	
+	public KeyInput(Game game) 
+	{
+		this.game = game;
+	}
+	
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+        int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_W) game.changeSelectedTile(Direction.UP);
+        if(key == KeyEvent.VK_S) game.changeSelectedTile(Direction.DOWN);
+        if(key == KeyEvent.VK_D) game.changeSelectedTile(Direction.RIGHT);
+        if(key == KeyEvent.VK_A) game.changeSelectedTile(Direction.LEFT);
+
+        if(key == KeyEvent.VK_ESCAPE) System.exit(1);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+}
