@@ -1,4 +1,4 @@
-package gods;
+package gods.Board;
 
 public class Square
 {

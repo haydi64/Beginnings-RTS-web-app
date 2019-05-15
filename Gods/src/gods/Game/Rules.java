@@ -1,7 +1,9 @@
-package gods;
+package gods.Game;
 
 import java.util.ArrayList;
 import java.util.List;
+import gods.Entities.Actions;
+import gods.Entities.GameType;
 
 public class Rules
 {

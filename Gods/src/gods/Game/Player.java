@@ -1,7 +1,10 @@
-package gods;
+package gods.Game;
 
 import java.util.ArrayList;
 import java.util.List;
+import gods.Entities.Building;
+import gods.Entities.GameObject;
+import gods.Entities.Unit;
 
 public class Player
 {

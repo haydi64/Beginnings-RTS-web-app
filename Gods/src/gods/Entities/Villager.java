@@ -1,6 +1,7 @@
-package gods;
+package gods.Entities;
 
 import java.util.ArrayList;
+import gods.Game.PlayerColor;
 
 public class Villager extends Unit {
 

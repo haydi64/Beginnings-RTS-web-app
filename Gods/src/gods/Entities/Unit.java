@@ -1,4 +1,7 @@
-package gods;
+package gods.Entities;
+
+import gods.Game.PlayerColor;
+import gods.Game.Rules;
 
 public class Unit extends GameObject {
 
