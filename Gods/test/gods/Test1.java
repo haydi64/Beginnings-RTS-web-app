@@ -12,7 +12,6 @@ import gods.Board.Terrain;
 import gods.Entities.Building;
 import gods.Entities.GameType;
 import gods.Entities.Unit;
-import gods.Entities.Villager;
 import gods.Game.Game;
 import gods.Game.MoveValidator;
 import gods.Game.PlayerColor;
@@ -131,7 +130,7 @@ class Test1 {
 	@Test
 	void testVillagerActions()
 	{
-		Villager v = new Villager(PlayerColor.RED);
+		Unit v = new Unit(GameType.VILLAGER, PlayerColor.RED);
 		assertEquals(3, v.getActions().size());
 	}
 	
@@ -147,7 +146,7 @@ class Test1 {
 	{
 //		testGame.addBuilding(0, 0, new Building(GameType.TOWN_HALL, PlayerColor.RED));
 //		testGame.printBoard();
-		testGame.addUnit(2, 2, new Villager(PlayerColor.RED));
+		testGame.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		testGame.build(2, 2, GameType.TOWN_HALL);
 		testGame.endTurn();
 		testGame.endTurn();

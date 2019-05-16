@@ -15,6 +15,7 @@ import gods.Entities.Building;
 import gods.Entities.GameObject;
 import gods.Entities.Unit;
 import gods.Game.Game;
+import gods.View.Camera;
 
 public class GameLoop extends Canvas implements Runnable
 {

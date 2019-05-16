@@ -1,4 +1,4 @@
-package gods;
+package gods.View;
 
 import java.awt.*;
 import javax.swing.*;
@@ -8,6 +8,7 @@ import javax.swing.*;
 //import java.awt.GridLayout;
 //import javax.swing.JFrame;
 //import javax.swing.JPanel;
+import gods.GameLoop;
 
 public class Window extends Canvas
 {

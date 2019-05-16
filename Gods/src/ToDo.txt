@@ -28,8 +28,8 @@ Refactoring
 	
 -----------------------------------------------------------------------
 Unit removes actions when they have been completed		initial impl. DONE
-Make popup abstract class
-Add building popup
+Make popup abstract class		DONE
+Add building popup		DONE
 Add training popup
 Add attacking
 

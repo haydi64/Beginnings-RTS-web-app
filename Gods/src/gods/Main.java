@@ -1,5 +1,7 @@
 package gods;
 
+import gods.View.Window;
+
 public class Main
 {
 

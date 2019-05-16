@@ -43,10 +43,7 @@ public abstract class GameObject
 
 	public abstract Unit train(GameType type);
 
-	public Building build(GameType gameType)
-	{
-		return null;
-	}
+	public abstract Building build(GameType gameType);
 
 	public void takeDamage(int lostTroops)
 	{

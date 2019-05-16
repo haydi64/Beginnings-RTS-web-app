@@ -21,7 +21,11 @@ public class Building extends GameObject
 	{
 		Unit unit;
 		if(listOfUnits.contains(gameType))
+		{
 			unit = new Unit(gameType, color);
+			unit.setMoved(true);
+			unit.setAttacked(true);
+		}
 		else unit = null;
 		return unit;
 	}
@@ -58,6 +62,12 @@ public class Building extends GameObject
 	public AttackResult attack(Unit defender)
 	{
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Building build(GameType gameType)
+	{
 		return null;
 	}
 

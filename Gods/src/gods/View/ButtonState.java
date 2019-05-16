@@ -1,4 +1,4 @@
-package gods.Game;
+package gods.View;
 
 public enum ButtonState
 {

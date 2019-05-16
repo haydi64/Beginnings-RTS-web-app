@@ -1,11 +1,10 @@
 package gods.Game;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 import gods.Direction;
 import gods.InvalidMoveException;
-import gods.PopupMenu;
 import gods.Board.Board;
 import gods.Board.Square;
 import gods.Entities.Actions;
@@ -14,13 +13,18 @@ import gods.Entities.Building;
 import gods.Entities.GameObject;
 import gods.Entities.GameType;
 import gods.Entities.Unit;
+import gods.View.BuildPopup;
+import gods.View.ButtonState;
+import gods.View.MyPopupMenu;
+import gods.View.TrainPopup;
+import gods.View.UnitPopup;
 
 public class Game
 {
 
 	private Board theBoard;
 	private GameState state;
-	private PopupMenu popup;
+	private MyPopupMenu popup;
 	private Square savedSquare;
 
 	public Game(Board board)
@@ -36,19 +40,22 @@ public class Game
 		this(new Board(20, 20));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
+		this.addBuilding(2, 3, new Building(GameType.BARRACKS, PlayerColor.RED));
 		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
 		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
 
-	public void tryMove() {
+	public void tryMove()
+	{
 		Square from = savedSquare;
 		Square to = getSelectedSquare();
-		
-		boolean isValid = MoveValidator.moveIsValid(from.getRow(), from.getColumn(), to.getRow(), to.getColumn(), theBoard, state.getCurrentPlayer().getColor());
-		if(isValid)
-		{
+
+		boolean isValid = MoveValidator.moveIsValid(from.getRow(), from.getColumn(),
+				to.getRow(), to.getColumn(), theBoard,
+				state.getCurrentPlayer().getColor());
+		if (isValid) {
 			moveUnit(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
-//			savedSquare = null;
+			// savedSquare = null;
 			setButtonState(ButtonState.Normal);
 		} else {
 			theBoard.setSelectedSquare(savedSquare);
@@ -58,20 +65,10 @@ public class Game
 
 	public void moveUnit(int fromRow, int fromColumn, int toRow, int toColumn)
 	{
-//		boolean validMove;
-//		try {
-//			validMove = MoveValidator.moveIsValid(fromRow, fromColumn, toRow,
-//					toColumn, theBoard, state.getCurrentPlayer().getColor());
-//		} catch (InvalidMoveException e) {
-//			e.printStackTrace();
-//			validMove = false;
-//		}
-//		if (validMove) {
 		Unit fromUnit = theBoard.getUnitAt(fromRow, fromColumn);
 		theBoard.setUnit(toRow, toColumn, fromUnit);
 		theBoard.setUnit(fromRow, fromColumn, null);
 		fromUnit.setMoved(true);
-//		}
 	}
 
 	public void attackUnit(int fromRow, int fromColumn, int toRow, int toColumn)
@@ -174,10 +171,15 @@ public class Game
 	public void addPopup()
 	{
 		Square selected = getSelectedSquare();
-//		GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
-		Unit unit = theBoard.getUnitAt(selected.getRow(), selected.getColumn());
-		if (unit != null) {
-			popup = new PopupMenu(selected, unit, Color.gray);
+		// GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
+		Unit unit = theBoard.getUnitAt(selected);
+		Building building = theBoard.getBuildingAt(selected);
+		if (unit != null && unit.getColor() == state.getCurrentPlayer().getColor()) {
+			popup = new UnitPopup(selected, unit);
+			setButtonState(ButtonState.Popup);
+		}
+		else if(building != null && building.getColor() == state.getCurrentPlayer().getColor()) {
+			popup = new TrainPopup(selected, building);
 			setButtonState(ButtonState.Popup);
 		}
 	}
@@ -187,10 +189,6 @@ public class Game
 		popup = null;
 	}
 
-	// public boolean hasPopup() {
-	// return popup != null;
-	// }
-
 	public void cycleActions(Direction dir)
 	{
 		popup.cycleActions(dir);
@@ -198,35 +196,52 @@ public class Game
 
 	public void selectAction()
 	{
-		if(popup == null)
-		{
+		if (popup == null) {
 			System.out.print("popup was not there");
 			return;
 		}
-		Actions action = popup.getAction();
+		System.out.println(popup.getCurrentItem());
+		Actions action = Actions.stringToActions(popup.getCurrentItem());
+		GameType type = GameType.stringToType(popup.getCurrentItem());
+		Square selected = getSelectedSquare();
+		if(action != null)
+			newAction(action, selected);
+		else if (type != null)
+		{
+			if(type.isUnit())
+				this.train(selected.getRow(), selected.getColumn(), type);
+			else
+				this.build(selected.getRow(), selected.getColumn(), type);
+			setButtonState(ButtonState.Normal);
+		}
+	}
+	
+	private void newAction(Actions action, Square selectedSquare)
+	{
 		switch (action) {
 			case Cancel:
 				setButtonState(ButtonState.Normal);
 				break;
 			case Move:
-				savedSquare = getSelectedSquare();
+				savedSquare = selectedSquare;
 				setButtonState(ButtonState.MoveUnit);
 				break;
 			case Attack:
-				savedSquare = getSelectedSquare();
+				savedSquare = selectedSquare;
 				setButtonState(ButtonState.AttackUnit);
 				break;
 			case Build:
+				List<GameType> buildings = new ArrayList<GameType>();
+				for(GameType type: GameType.values())
+					if(!type.isUnit())
+						buildings.add(type);
+				popup = new BuildPopup(selectedSquare, buildings);
 				break;
 			case Train:
 				break;
 			default:
 				break;
 		}
-		// Implement this through game state
-		// Might have to have different popup menus
-		// Could add a abstract popup menu
-//		removePopup();
 	}
 
 	public GameObject getGameObjectAt(int row, int column)
@@ -243,13 +258,12 @@ public class Game
 	{
 		return state.getButtonState();
 	}
-	
+
 	private void setButtonState(ButtonState buttonState)
 	{
-		if(buttonState != ButtonState.Popup)
+		if (buttonState != ButtonState.Popup)
 			popup = null;
-		if(buttonState == ButtonState.Normal)
-		{
+		if (buttonState == ButtonState.Normal) {
 			savedSquare = null;
 		}
 		state.setButtonState(buttonState);

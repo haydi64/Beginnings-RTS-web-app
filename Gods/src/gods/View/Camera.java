@@ -1,5 +1,6 @@
-package gods;
+package gods.View;
 
+import gods.GameLoop;
 import gods.Board.Square;
 
 public class Camera

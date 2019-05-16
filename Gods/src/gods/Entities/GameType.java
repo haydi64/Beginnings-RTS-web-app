@@ -16,4 +16,13 @@ public enum GameType
 	{
 		return unit;
 	}
+
+	public static GameType stringToType(String string)
+	{
+		GameType gType = null;
+		for(GameType type: GameType.values())
+			if(type.toString() == string)
+				gType = type;
+		return gType;
+	}
 }

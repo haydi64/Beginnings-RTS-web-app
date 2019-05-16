@@ -104,4 +104,13 @@ public class Unit extends GameObject {
 	public Unit train(GameType type) {
 		return null;
 	}
+	
+	@Override
+	public Building build(GameType gType)
+	{
+		Building building = null;
+		if(this.type == GameType.VILLAGER && !gType.isUnit())
+			building = new Building(gType, color);
+		return building;
+	}
 }
