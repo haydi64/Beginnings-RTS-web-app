@@ -13,8 +13,8 @@ public class Camera
 	}
 
     public void tick(Square tile){
-        x += ((tile.getRow() * 50 - x) - Main.WIDTH / 2) * 0.05f;
-        y += ((tile.getColumn() * 50 - y) - Main.HEIGHT / 2) * 0.05f;
+        x += ((tile.getRow() * 50 - x) - GameLoop.WIDTH / 2) * 0.05f;
+        y += ((tile.getColumn() * 50 - y) - GameLoop.HEIGHT / 2) * 0.05f;
     }
 
     public float getX() {

@@ -19,10 +19,20 @@ public class KeyInput implements KeyListener
 	{
         int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_W) game.changeSelectedTile(Direction.UP);
-        if(key == KeyEvent.VK_S) game.changeSelectedTile(Direction.DOWN);
-        if(key == KeyEvent.VK_D) game.changeSelectedTile(Direction.RIGHT);
-        if(key == KeyEvent.VK_A) game.changeSelectedTile(Direction.LEFT);
+        if(game.hasPopup()) {
+            if(key == KeyEvent.VK_W) game.cycleActions(Direction.UP);
+            if(key == KeyEvent.VK_S) game.cycleActions(Direction.DOWN);
+            
+            if(key == KeyEvent.VK_Z) game.selectAction();
+        	
+        } else {
+            if(key == KeyEvent.VK_W) game.changeSelectedTile(Direction.UP);
+            if(key == KeyEvent.VK_S) game.changeSelectedTile(Direction.DOWN);
+            if(key == KeyEvent.VK_D) game.changeSelectedTile(Direction.RIGHT);
+            if(key == KeyEvent.VK_A) game.changeSelectedTile(Direction.LEFT);
+            
+            if(key == KeyEvent.VK_Z) game.addPopup();
+        }
 
         if(key == KeyEvent.VK_ESCAPE) System.exit(1);
 	}

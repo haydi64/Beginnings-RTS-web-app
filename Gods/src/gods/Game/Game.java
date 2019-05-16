@@ -1,12 +1,17 @@
 package gods.Game;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
 import gods.Direction;
 import gods.InvalidMoveException;
+import gods.PopupMenu;
 import gods.Board.Board;
 import gods.Board.Square;
+import gods.Entities.Actions;
 import gods.Entities.AttackResult;
 import gods.Entities.Building;
+import gods.Entities.GameObject;
 import gods.Entities.GameType;
 import gods.Entities.Unit;
 
@@ -15,17 +20,18 @@ public class Game
 
 	private Board theBoard;
 	private GameState state;
+	private PopupMenu popup;
 
 	public Game(Board board)
 	{
 		theBoard = board;
 		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
+		popup = null;
 	}
 
 	public Game()
 	{
-		theBoard = new Board(20, 20);
-		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
+		this(new Board(20, 20));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
 		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
@@ -74,7 +80,8 @@ public class Game
 	public void build(int row, int column, GameType gameType)
 	{
 		Unit unit = theBoard.getUnitAt(row, column);
-		if (MoveValidator.buildIsValid(row, column, theBoard, gameType, state.getCurrentPlayer())) {
+		if (MoveValidator.buildIsValid(row, column, theBoard, gameType,
+				state.getCurrentPlayer())) {
 			addBuilding(row, column, unit.build(gameType));
 			unit.setAttacked(true);
 			unit.setMoved(true);
@@ -84,7 +91,8 @@ public class Game
 	public void train(int row, int column, GameType gType)
 	{
 		Building building = theBoard.getBuildingAt(row, column);
-		if (MoveValidator.trainIsValid(row, column, theBoard, gType, state.getCurrentPlayer())) {
+		if (MoveValidator.trainIsValid(row, column, theBoard, gType,
+				state.getCurrentPlayer())) {
 			addUnit(row, column, building.train(gType));
 		}
 	}
@@ -131,6 +139,8 @@ public class Game
 	public void render(Graphics g)
 	{
 		theBoard.render(g);
+		if(popup != null)
+			popup.render(g);
 	}
 
 	public Square getSelectedSquare()
@@ -141,5 +151,45 @@ public class Game
 	public void changeSelectedTile(Direction dir)
 	{
 		theBoard.changeSelectedTile(dir);
+	}
+
+	public void addPopup()
+	{
+		Square selected = getSelectedSquare();
+		GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
+		if (obj != null)
+			popup = new PopupMenu(selected, obj.getActions(), Color.gray);
+	}
+	
+	public void removePopup() {
+		popup = null;
+	}
+	
+	public boolean hasPopup() {
+		return popup != null;
+	}
+	
+	public void cycleActions(Direction dir)
+	{
+		popup.cycleActions(dir);
+	}
+	
+	public void selectAction()
+	{
+		Actions action = popup.getAction();
+		//Implement this through game state
+		//Might have to have different popup menus
+		//Could add a abstract popup menu
+		removePopup();
+	}
+
+	public GameObject getGameObjectAt(int row, int column)
+	{
+		GameObject obj;
+		if (theBoard.getUnitAt(row, column) != null)
+			obj = theBoard.getUnitAt(row, column);
+		else
+			obj = theBoard.getBuildingAt(row, column);
+		return obj;
 	}
 }

@@ -1,15 +1,11 @@
 package gods.Game;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import gods.Entities.GameObject;
 
 public class GameState
 {
-	// private List<PlayerColor> playersOld;
-	// private List<List<GameObject>> gameObjects;
 	private List<Player> players;
 	private int turnNumber;
 	private int currentPlayer;
@@ -21,10 +17,6 @@ public class GameState
 			players.add(new Player(color));
 		}
 
-		// playersOld = new ArrayList<PlayerColor>(Arrays.asList(colors));
-		// gameObjects = new ArrayList<List<GameObject>>();
-		// for(PlayerColor color: playersOld)
-		// gameObjects.add(new ArrayList<GameObject>());
 		currentPlayer = 0;
 		turnNumber = 1;
 	}
