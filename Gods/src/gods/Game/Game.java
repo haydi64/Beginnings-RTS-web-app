@@ -174,9 +174,10 @@ public class Game
 	public void addPopup()
 	{
 		Square selected = getSelectedSquare();
-		GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
-		if (obj != null) {
-			popup = new PopupMenu(selected, obj.getActions(), Color.gray);
+//		GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
+		Unit unit = theBoard.getUnitAt(selected.getRow(), selected.getColumn());
+		if (unit != null) {
+			popup = new PopupMenu(selected, unit, Color.gray);
 			setButtonState(ButtonState.Popup);
 		}
 	}

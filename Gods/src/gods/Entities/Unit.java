@@ -63,6 +63,10 @@ public class Unit extends GameObject {
 	public void setAttacked(boolean bool)
 	{
 		this.hasAttacked = bool;
+//		if(hasAttacked)
+//			actions.remove(Actions.Attack);
+//		else if(!actions.contains(Actions.Attack))
+//			actions.add(Actions.Attack);
 	}
 	
 	public boolean hasMoved()
@@ -73,6 +77,10 @@ public class Unit extends GameObject {
 	public void setMoved(boolean bool)
 	{
 		this.hasMoved = bool;
+//		if(hasMoved)
+//			actions.remove(Actions.Move);
+//		else if(!actions.contains(Actions.Move))
+//			actions.add(Actions.Move);
 	}
 
 	@Override

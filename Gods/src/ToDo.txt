@@ -14,12 +14,12 @@ Unit
 Players
 	red vs blue		DONE
 	all enemies are dead == victory		DONE
-	all buildings and enemies are dead == victory
+	all buildings and enemies are dead == victory		DONE
 	
 add Resource buildings that give gold/food	DONE
-use gold/food to train/build
-if not enough gold/food then cannot build/train
-buildings can be built anywhere in this version
+use gold/food to train/build		DONE
+if not enough gold/food then cannot build/train		DONE
+buildings can be built anywhere in this version		DONE
 
 Refactoring
 	add rules class that holds all the values of things like def and atk		DONE
@@ -27,11 +27,16 @@ Refactoring
 	
 	
 -----------------------------------------------------------------------
-Unit removes actions when they have been completed
-Add attacking
+Unit removes actions when they have been completed		initial impl. DONE
 Make popup abstract class
 Add building popup
 Add training popup
+Add attacking
 
 Add border around all possible destinations when moving
 **REFACTOR
+
+
+add end turn button
+Add indicator to which team is playing
+change color of pieces
