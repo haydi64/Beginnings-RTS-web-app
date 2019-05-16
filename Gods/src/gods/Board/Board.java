@@ -129,4 +129,9 @@ public class Board
 				break;
 		}
 	}
+
+	public void setSelectedSquare(Square square)
+	{
+		this.selectedSquare = square;
+	}
 }

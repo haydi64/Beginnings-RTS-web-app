@@ -9,6 +9,7 @@ public class GameState
 	private List<Player> players;
 	private int turnNumber;
 	private int currentPlayer;
+	private ButtonState buttonState;
 
 	public GameState(PlayerColor... colors)
 	{
@@ -19,6 +20,7 @@ public class GameState
 
 		currentPlayer = 0;
 		turnNumber = 1;
+		buttonState = ButtonState.Normal;
 	}
 
 	public Player nextPlayer()
@@ -95,5 +97,15 @@ public class GameState
 	public int getTurnNumber()
 	{
 		return this.turnNumber;
+	}
+	
+	public void setButtonState(ButtonState state)
+	{
+		buttonState = state;
+	}
+	
+	public ButtonState getButtonState()
+	{
+		return this.buttonState;
 	}
 }

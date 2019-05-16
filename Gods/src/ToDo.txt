@@ -24,3 +24,14 @@ buildings can be built anywhere in this version
 Refactoring
 	add rules class that holds all the values of things like def and atk		DONE
 	add gameobject factory to create objects
+	
+	
+-----------------------------------------------------------------------
+Unit removes actions when they have been completed
+Add attacking
+Make popup abstract class
+Add building popup
+Add training popup
+
+Add border around all possible destinations when moving
+**REFACTOR

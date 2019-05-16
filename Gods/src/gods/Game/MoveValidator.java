@@ -13,7 +13,6 @@ public class MoveValidator
 
 	public static boolean moveIsValid(int fromRow, int fromColumn, int toRow,
 			int toColumn, Board theBoard, PlayerColor color)
-			throws InvalidMoveException
 	{
 		boolean isValid = true;
 
@@ -23,21 +22,19 @@ public class MoveValidator
 		Square to = new Square(toRow, toColumn);
 
 		if (!theBoard.squaresInBounds(from, to))
-			throw new InvalidMoveException("Invalid squares");
-		if (fromUnit == null)
-			throw new InvalidMoveException(
-					"From unit was null at position " + fromRow + ", " + fromColumn);
-		if (fromUnit.getColor() != color)
-			throw new InvalidMoveException("Tried to move a piece, not their own");
-		if(!fromUnit.getActions().contains(Actions.Move))
-			throw new InvalidMoveException("No actions");
-		if (fromUnit.getMoveLimit() < from.getManDistance(to))
-			throw new InvalidMoveException(
-					"Tried to move a distance of " + from.getManDistance(to));
-		if (toUnit != null)
-			throw new InvalidMoveException("Tried to move onto another unit");
-		if (fromUnit.hasMoved())
-			throw new InvalidMoveException("Unit has already moved");
+			isValid = false;
+		else if (fromUnit == null)
+			isValid = false;
+		else if (fromUnit.getColor() != color)
+			isValid = false;
+		else if(!fromUnit.getActions().contains(Actions.Move))
+			isValid = false;
+		else if (fromUnit.getMoveLimit() < from.getManDistance(to))
+			isValid = false;
+		else if (toUnit != null)
+			isValid = false;
+		else if (fromUnit.hasMoved())
+			isValid = false;
 		return isValid;
 	}
 

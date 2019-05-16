@@ -21,12 +21,14 @@ public class Game
 	private Board theBoard;
 	private GameState state;
 	private PopupMenu popup;
+	private Square savedSquare;
 
 	public Game(Board board)
 	{
 		theBoard = board;
 		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
 		popup = null;
+		savedSquare = null;
 	}
 
 	public Game()
@@ -38,22 +40,38 @@ public class Game
 		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
 
+	public void tryMove() {
+		Square from = savedSquare;
+		Square to = getSelectedSquare();
+		
+		boolean isValid = MoveValidator.moveIsValid(from.getRow(), from.getColumn(), to.getRow(), to.getColumn(), theBoard, state.getCurrentPlayer().getColor());
+		if(isValid)
+		{
+			moveUnit(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
+//			savedSquare = null;
+			setButtonState(ButtonState.Normal);
+		} else {
+			theBoard.setSelectedSquare(savedSquare);
+			this.addPopup();
+		}
+	}
+
 	public void moveUnit(int fromRow, int fromColumn, int toRow, int toColumn)
 	{
-		boolean validMove;
-		try {
-			validMove = MoveValidator.moveIsValid(fromRow, fromColumn, toRow,
-					toColumn, theBoard, state.getCurrentPlayer().getColor());
-		} catch (InvalidMoveException e) {
-			e.printStackTrace();
-			validMove = false;
-		}
-		if (validMove) {
-			Unit fromUnit = theBoard.getUnitAt(fromRow, fromColumn);
-			theBoard.setUnit(toRow, toColumn, fromUnit);
-			theBoard.setUnit(fromRow, fromColumn, null);
-			fromUnit.setMoved(true);
-		}
+//		boolean validMove;
+//		try {
+//			validMove = MoveValidator.moveIsValid(fromRow, fromColumn, toRow,
+//					toColumn, theBoard, state.getCurrentPlayer().getColor());
+//		} catch (InvalidMoveException e) {
+//			e.printStackTrace();
+//			validMove = false;
+//		}
+//		if (validMove) {
+		Unit fromUnit = theBoard.getUnitAt(fromRow, fromColumn);
+		theBoard.setUnit(toRow, toColumn, fromUnit);
+		theBoard.setUnit(fromRow, fromColumn, null);
+		fromUnit.setMoved(true);
+//		}
 	}
 
 	public void attackUnit(int fromRow, int fromColumn, int toRow, int toColumn)
@@ -139,7 +157,7 @@ public class Game
 	public void render(Graphics g)
 	{
 		theBoard.render(g);
-		if(popup != null)
+		if (popup != null)
 			popup.render(g);
 	}
 
@@ -157,30 +175,57 @@ public class Game
 	{
 		Square selected = getSelectedSquare();
 		GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
-		if (obj != null)
+		if (obj != null) {
 			popup = new PopupMenu(selected, obj.getActions(), Color.gray);
+			setButtonState(ButtonState.Popup);
+		}
 	}
-	
-	public void removePopup() {
+
+	public void removePopup()
+	{
 		popup = null;
 	}
-	
-	public boolean hasPopup() {
-		return popup != null;
-	}
-	
+
+	// public boolean hasPopup() {
+	// return popup != null;
+	// }
+
 	public void cycleActions(Direction dir)
 	{
 		popup.cycleActions(dir);
 	}
-	
+
 	public void selectAction()
 	{
+		if(popup == null)
+		{
+			System.out.print("popup was not there");
+			return;
+		}
 		Actions action = popup.getAction();
-		//Implement this through game state
-		//Might have to have different popup menus
-		//Could add a abstract popup menu
-		removePopup();
+		switch (action) {
+			case Cancel:
+				setButtonState(ButtonState.Normal);
+				break;
+			case Move:
+				savedSquare = getSelectedSquare();
+				setButtonState(ButtonState.MoveUnit);
+				break;
+			case Attack:
+				savedSquare = getSelectedSquare();
+				setButtonState(ButtonState.AttackUnit);
+				break;
+			case Build:
+				break;
+			case Train:
+				break;
+			default:
+				break;
+		}
+		// Implement this through game state
+		// Might have to have different popup menus
+		// Could add a abstract popup menu
+//		removePopup();
 	}
 
 	public GameObject getGameObjectAt(int row, int column)
@@ -191,5 +236,21 @@ public class Game
 		else
 			obj = theBoard.getBuildingAt(row, column);
 		return obj;
+	}
+
+	public ButtonState getButtonState()
+	{
+		return state.getButtonState();
+	}
+	
+	private void setButtonState(ButtonState buttonState)
+	{
+		if(buttonState != ButtonState.Popup)
+			popup = null;
+		if(buttonState == ButtonState.Normal)
+		{
+			savedSquare = null;
+		}
+		state.setButtonState(buttonState);
 	}
 }
