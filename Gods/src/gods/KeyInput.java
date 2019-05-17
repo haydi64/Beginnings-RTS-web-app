@@ -26,6 +26,8 @@ public class KeyInput implements KeyListener
 
 				if (key == KeyEvent.VK_Z)
 					game.addPopup();
+				if (key == KeyEvent.VK_ENTER)
+					game.endTurn();
 				break;
 			case Popup:
 				if (key == KeyEvent.VK_W)
@@ -38,11 +40,22 @@ public class KeyInput implements KeyListener
 				break;
 			case MoveUnit:
 				NavigateMap(key);
-				
-				if(key == KeyEvent.VK_Z)
+
+				if (key == KeyEvent.VK_Z)
 					game.tryMove();
 				break;
 			case AttackUnit:
+				if (key == KeyEvent.VK_W)
+					game.changePossibleTile(Direction.UP);
+				if (key == KeyEvent.VK_S)
+					game.changePossibleTile(Direction.DOWN);
+				if (key == KeyEvent.VK_D)
+					game.changePossibleTile(Direction.UP);
+				if (key == KeyEvent.VK_A)
+					game.changePossibleTile(Direction.RIGHT);
+				
+				if(key == KeyEvent.VK_Z)
+					game.tryAttack();
 				break;
 		}
 		// if(game.hasPopup()) {

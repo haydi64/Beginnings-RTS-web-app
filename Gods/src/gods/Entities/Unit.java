@@ -63,6 +63,8 @@ public class Unit extends GameObject {
 	public void setAttacked(boolean bool)
 	{
 		this.hasAttacked = bool;
+		if(hasAttacked)
+			hasMoved = true;
 //		if(hasAttacked)
 //			actions.remove(Actions.Attack);
 //		else if(!actions.contains(Actions.Attack))

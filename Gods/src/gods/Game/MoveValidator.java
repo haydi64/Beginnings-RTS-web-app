@@ -27,7 +27,7 @@ public class MoveValidator
 			isValid = false;
 		else if (fromUnit.getColor() != color)
 			isValid = false;
-		else if(!fromUnit.getActions().contains(Actions.Move))
+		else if (!fromUnit.getActions().contains(Actions.Move))
 			isValid = false;
 		else if (fromUnit.getMoveLimit() < from.getManDistance(to))
 			isValid = false;
@@ -38,10 +38,36 @@ public class MoveValidator
 		return isValid;
 	}
 
-	public static void attackIsValid(int fromRow, int fromColumn, int toRow,
-			int toColumn, Board theBoard, PlayerColor color)
-			throws InvalidMoveException
+	public static boolean attackIsValid(Square from, Square to,
+			Board theBoard, PlayerColor color)
 	{
+		boolean isValid = true;
+
+		Unit fromUnit = theBoard.getUnitAt(from);
+		Unit toUnit = theBoard.getUnitAt(to);
+
+		if (!theBoard.squaresInBounds(from, to))
+			isValid = false;
+		else if (fromUnit == null || toUnit == null)
+			isValid = false;
+		else if (!fromUnit.getActions().contains(Actions.Attack))
+			isValid = false;
+		else if (fromUnit.getColor() != color)
+			isValid = false;
+		else if (fromUnit.getColor() == toUnit.getColor())
+			isValid = false;
+		else if (fromUnit.getRange() < from.getManDistance(to))
+			isValid = false;
+		else if (fromUnit.hasAttacked())
+			isValid = false;
+
+		return isValid;
+	}
+
+	public static boolean attackIsValid(int fromRow, int fromColumn, int toRow,
+			int toColumn, Board theBoard, PlayerColor color)
+	{
+		boolean isValid = true;
 
 		Unit fromUnit = theBoard.getUnitAt(fromRow, fromColumn);
 		Unit toUnit = theBoard.getUnitAt(toRow, toColumn);
@@ -49,24 +75,25 @@ public class MoveValidator
 		Square to = new Square(toRow, toColumn);
 
 		if (!theBoard.squaresInBounds(from, to))
-			throw new InvalidMoveException("Invalid squares");
-		if (fromUnit == null || toUnit == null)
-			throw new InvalidMoveException("Must have a unit attack another unit");
-		if (!fromUnit.getActions().contains(Actions.Attack))
-			throw new InvalidMoveException("Cannot attack");
-		if (fromUnit.getColor() != color)
-			throw new InvalidMoveException(
-					"Tried to attack with a piece, not their own");
-		if (fromUnit.getColor() == toUnit.getColor())
-			throw new InvalidMoveException("Cannot attack a friendly unit");
-		if (fromUnit.getRange() < from.getManDistance(to))
-			throw new InvalidMoveException(
-					"Other unit out of range, " + from.getManDistance(to));
-		if (fromUnit.hasAttacked())
-			throw new InvalidMoveException("Unit has already attacked");
+			isValid = false;
+		else if (fromUnit == null || toUnit == null)
+			isValid = false;
+		else if (!fromUnit.getActions().contains(Actions.Attack))
+			isValid = false;
+		else if (fromUnit.getColor() != color)
+			isValid = false;
+		else if (fromUnit.getColor() == toUnit.getColor())
+			isValid = false;
+		else if (fromUnit.getRange() < from.getManDistance(to))
+			isValid = false;
+		else if (fromUnit.hasAttacked())
+			isValid = false;
+
+		return isValid;
 	}
 
-	public static boolean buildIsValid(int row, int column, Board board, GameType type, Player player)
+	public static boolean buildIsValid(int row, int column, Board board,
+			GameType type, Player player)
 	{
 		Unit unit = board.getUnitAt(row, column);
 		Building building = board.getBuildingAt(row, column);
@@ -76,12 +103,14 @@ public class MoveValidator
 				&& unit.hasAttacked() == false && player.canAfford(cost[0], cost[1]);
 	}
 
-	public static boolean trainIsValid(int row, int column, Board theBoard, GameType type, Player player)
+	public static boolean trainIsValid(int row, int column, Board theBoard,
+			GameType type, Player player)
 	{
 		Unit unit = theBoard.getUnitAt(row, column);
 		Building building = theBoard.getBuildingAt(row, column);
 		int[] cost = Rules.getObjectCost(type);
-		return unit == null && building != null && player.canAfford(cost[0], cost[1]);
+		return unit == null && building != null
+				&& player.canAfford(cost[0], cost[1]);
 	}
 
 }

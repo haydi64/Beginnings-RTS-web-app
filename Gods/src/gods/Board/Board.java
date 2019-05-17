@@ -1,11 +1,14 @@
 package gods.Board;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import gods.Direction;
 import gods.Entities.Building;
 import gods.Entities.Unit;
+import gods.Game.MoveValidator;
 
 public class Board
 {
@@ -143,5 +146,29 @@ public class Board
 			}
 			System.out.print('\n');
 		}
+	}
+
+	public List<Square> squaresInAttackRange(Square square)
+	{
+		List<Square> squares = new ArrayList<Square>();
+		Unit unit = getUnitAt(square);
+		int range = unit.getRange();
+		int startX = square.getRow() - range;
+		int startY = square.getRow() - range;
+		int endX = square.getRow() + range;
+		int endY = square.getColumn() + range;
+		startX = (startX < 0) ? 0 : startX;
+		startY = (startY < 0) ? 0 : startY;
+		endX = (endX >= rows) ? rows : endX;
+		endY = (endY >= columns) ? columns : endY;
+		for(int i = startX; i < rows; i++) {
+			for(int j = startY; j < columns; j++) {
+				Unit toUnit = getUnitAt(i, j);
+				Square to = new Square(i, j);
+				if(MoveValidator.attackIsValid(square, to, this, unit.getColor()))
+					squares.add(new Square(i, j));
+			}
+		}
+		return squares;
 	}
 }

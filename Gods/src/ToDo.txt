@@ -30,8 +30,8 @@ Refactoring
 Unit removes actions when they have been completed		initial impl. DONE
 Make popup abstract class		DONE
 Add building popup		DONE
-Add training popup
-Add attacking
+Add training popup		DONE
+Add attacking		DONE
 
 Add border around all possible destinations when moving
 **REFACTOR
