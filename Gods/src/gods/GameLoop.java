@@ -25,17 +25,13 @@ public class GameLoop extends Canvas implements Runnable
     private Thread thread;
     private boolean running = false;
 
-//    private Map map;
-//    private BufferedImage level = null;
     private Camera camera;
     private Game game;
     
     public GameLoop() {
-//    	new Window(WIDTH, HEIGHT, "Game", this);
     	camera = new Camera(0, 0);
     	game = new Game();
     	this.addKeyListener(new KeyInput(game));
-//    	start();
     }
 	
     public synchronized void start() {
@@ -109,28 +105,13 @@ public class GameLoop extends Canvas implements Runnable
         g2d.translate(-camera.getX() - offset,-camera.getY() - offset);
 
         game.render(g);
-        //map.selectedTile.setSelected(true,g);
-//        if(game.hasPopupMenu())
-//        {
-//        	game.renderPopup;
-//        	Square selectedSquare = game.getSelectedSquare();
-//        	int row = selectedSquare.getRow();
-//        	int column = selectedSquare.getColumn();
-//        	Unit unit = game.getBoard().getUnitAt(row, column);
-//        	Building building = game.getBoard().getBuildingAt(row, column);
-//        	List<Actions> actions;
-//        	if(unit != null)
-//        		actions = unit.getActions();
-//        	else if (building != null)
-//        		actions = building.getActions();
-//        	else actions = new ArrayList<Actions>();
-//        	RenderObject.renderPopup(game.getSelectedSquare(), actions, g2d, Color.GRAY);
-//        }
 
         g2d.translate(camera.getX() + offset,camera.getY() + offset);
         
-//        g.setColor(Color.gray);
-//        g.fillRect(0, HEIGHT - offset, WIDTH, offset);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(0, 0, WIDTH, 50);
+        
+        game.renderInfo(g);
         
 
         g.dispose();

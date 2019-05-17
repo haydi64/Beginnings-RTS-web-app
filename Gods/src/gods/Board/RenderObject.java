@@ -68,7 +68,10 @@ public class RenderObject
 	
 	private static String getIconPath(GameType type)
 	{
-		return "/resources/icons/" + type.toString().toLowerCase() + ".png";
+		if(type == GameType.SWORD)
+			return "/resources/icons/red" + type.toString().toLowerCase() + ".png";
+		else
+			return "/resources/icons/" + type.toString().toLowerCase() + ".png";
 	}
 
 }

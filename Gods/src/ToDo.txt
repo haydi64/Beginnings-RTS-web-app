@@ -37,6 +37,7 @@ Add border around all possible destinations when moving
 **REFACTOR
 
 
-add end turn button
-Add indicator to which team is playing
+add end turn button		DONE
+Add indicator to which team is playing		DONE
+Add game over		DONE
 change color of pieces

@@ -1,9 +1,11 @@
 package gods.Game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import gods.Direction;
+import gods.GameLoop;
 import gods.InvalidMoveException;
 import gods.Board.Board;
 import gods.Board.Square;
@@ -42,8 +44,8 @@ public class Game
 		this(new Board(20, 20));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
-		this.addBuilding(2, 3, new Building(GameType.BARRACKS, PlayerColor.RED));
-		this.addUnit(4, 4, new Unit(GameType.SPEAR, PlayerColor.BLUE));
+//		this.addBuilding(2, 3, new Building(GameType.BARRACKS, PlayerColor.RED));
+//		this.addUnit(4, 4, new Unit(GameType.SPEAR, PlayerColor.BLUE));
 		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
 		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
@@ -111,7 +113,9 @@ public class Game
 		Unit unit = theBoard.getUnitAt(row, column);
 		if (MoveValidator.buildIsValid(row, column, theBoard, gameType,
 				state.getCurrentPlayer())) {
-			addBuilding(row, column, unit.build(gameType));
+			Building building = unit.build(gameType);
+			state.takeCost(building);
+			addBuilding(row, column, building);
 			unit.setAttacked(true);
 			unit.setMoved(true);
 		}
@@ -122,7 +126,9 @@ public class Game
 		Building building = theBoard.getBuildingAt(row, column);
 		if (MoveValidator.trainIsValid(row, column, theBoard, gType,
 				state.getCurrentPlayer())) {
-			addUnit(row, column, building.train(gType));
+			Unit unit = building.train(gType);
+			state.takeCost(unit);
+			addUnit(row, column, unit);
 		}
 	}
 
@@ -151,6 +157,7 @@ public class Game
 	{
 		System.out
 				.println("Player " + state.getCurrentPlayer().toString() + " wins");
+		state.gameOver();
 	}
 
 	public void printBoard()
@@ -170,6 +177,16 @@ public class Game
 		theBoard.render(g);
 		if (popup != null)
 			popup.render(g);
+		if (state.isGameOver()) {
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(GameLoop.WIDTH / 2, GameLoop.HEIGHT, 100, 50);
+			g.drawString("GAME OVER", GameLoop.WIDTH / 2 + 25, GameLoop.HEIGHT / 2 + 25);
+		}
+	}
+	
+	public void renderInfo(Graphics g)
+	{
+		state.renderPlayerInfo(g);
 	}
 
 	public Square getSelectedSquare()
