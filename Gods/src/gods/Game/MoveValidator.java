@@ -1,6 +1,5 @@
 package gods.Game;
 
-import gods.InvalidMoveException;
 import gods.Board.Board;
 import gods.Board.Square;
 import gods.Entities.Actions;

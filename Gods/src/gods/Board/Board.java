@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import gods.Direction;
 import gods.Entities.Building;
 import gods.Entities.Unit;
 import gods.Game.MoveValidator;
+import gods.View.Direction;
 
 public class Board
 {

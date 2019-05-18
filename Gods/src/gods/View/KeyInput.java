@@ -1,9 +1,8 @@
-package gods;
+package gods.View;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import gods.Game.Game;
-import gods.View.ButtonState;
 
 public class KeyInput implements KeyListener
 {

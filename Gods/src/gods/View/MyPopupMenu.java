@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import gods.Direction;
 import gods.Board.RenderObject;
 import gods.Board.Square;
 

@@ -1,4 +1,4 @@
-package gods;
+package gods.View;
 
 public enum Direction
 {

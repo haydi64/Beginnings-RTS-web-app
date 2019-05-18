@@ -34,44 +34,21 @@ public class RenderObject
 		int pixelY = column * tileStart;
 		BufferedImageLoader image = new BufferedImageLoader();
 		BufferedImage icon = image.loadImage(getIconPath(type));
+		//almost working, need to find the bounds
+//		int red = Color.red.getRGB();
+//		for(int i = 0; i < icon.getWidth(); i++)
+//			for(int j = 0; j < icon.getHeight(); j++)
+//				if(icon.getRGB(i, j) == Color.black.getRGB())
+//					icon.setRGB(i, j, red);
 		g.drawImage(icon, pixelX+9, pixelY+9, null);
 	}
 	
-//	public static void renderPopup(Square square, List<Actions> actions, Graphics g, Color color)
-//	{
-//		if(actions.size() <= 0)
-//			return;
-//		int pixelX = (square.getRow() + 1) * tileStart;
-//		int pixelY = square.getColumn() * tileStart;
-//		int borderStart = pixelY;
-//		int boxHeight = actions.size() + 1;
-//		int height = tileSize * boxHeight + boxHeight;
-//		int width = 100;
-//		int textOffsetX = pixelX + 10;
-//		int textOffsetY = pixelY + tileSize / 2;
-//		g.setColor(color);
-//		g.fillRect(pixelX, pixelY, width, height);
-//		g.setFont(sanSerif);
-//		for(int i = 0; i < actions.size(); i++)
-//		{
-//			g.setColor(Color.white);
-//			g.drawRect(pixelX, borderStart, width, tileSize);
-//			g.setColor(Color.black);
-//			g.drawString(actions.get(i).toString(), textOffsetX, textOffsetY);
-//			textOffsetY += tileSize;
-//			borderStart += tileStart;
-//		}
-//		g.drawString("Cancel", textOffsetX, textOffsetY);
-//		g.setColor(Color.white);
-//		g.drawRect(pixelX, borderStart, width, tileSize);
-//	}
-	
 	private static String getIconPath(GameType type)
 	{
-		if(type == GameType.SWORD)
-			return "/resources/icons/red" + type.toString().toLowerCase() + ".png";
-		else
-			return "/resources/icons/" + type.toString().toLowerCase() + ".png";
+//		if(type == GameType.SWORD)
+//			return "/resources/icons/red" + type.toString().toLowerCase() + ".png";
+//		else
+		return "/resources/icons/" + type.toString().toLowerCase() + ".png";
 	}
 
 }
