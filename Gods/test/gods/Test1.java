@@ -1,6 +1,7 @@
 package gods;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.awt.Color;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import gods.Entities.GameType;
 import gods.Entities.Unit;
 import gods.Game.Game;
 import gods.Game.MoveValidator;
-import gods.Game.PlayerColor;
 
 class Test1 {
 	Board testBoard;
@@ -24,9 +24,9 @@ class Test1 {
 	void setup() {
 		testBoard = new Board(10, 10);
 		testGame = new Game(testBoard);
-		testGame.addUnit(0, 0, new Unit(GameType.SPEAR, PlayerColor.RED));
-		testGame.addUnit(0, 4, new Unit(GameType.SPEAR, PlayerColor.RED));
-		testGame.addUnit(1, 1, new Unit(GameType.SWORD, PlayerColor.BLUE));
+		testGame.addUnit(0, 0, new Unit(GameType.SPEAR, Color.RED));
+		testGame.addUnit(0, 4, new Unit(GameType.SPEAR, Color.RED));
+		testGame.addUnit(1, 1, new Unit(GameType.SWORD, Color.BLUE));
 	}
 
 	@Test
@@ -48,48 +48,48 @@ class Test1 {
 
 	@Test
 	void checkColor() {
-		assertEquals(testBoard.getUnitAt(0, 0).getColor(), PlayerColor.RED);
+		assertEquals(testBoard.getUnitAt(0, 0).getColor(), Color.RED);
 	}
 
 	@ParameterizedTest
 	@MethodSource("moveLimitProvider")
-	void moveLimit(int tr, int tc, int fr, int fc, PlayerColor color) {
-		assertThrows(InvalidMoveException.class, () -> MoveValidator.moveIsValid(tr, tc, fr, fc, testBoard, color));
+	void moveLimit(int tr, int tc, int fr, int fc, Color color) {
+		assertEquals(false, MoveValidator.moveIsValid(tr, tc, fr, fc, testBoard, color));
 	}
 
 	static Stream<Arguments> moveLimitProvider() {
 		return Stream.of(
 				// Too far
-				Arguments.of(0, 0, 8, 0, PlayerColor.RED),
+				Arguments.of(0, 0, 8, 0, Color.RED),
 				// Too far
-				Arguments.of(0, 0, 4, 4, PlayerColor.RED),
+				Arguments.of(0, 0, 4, 4, Color.RED),
 				// Cannot move onto another unit
-				Arguments.of(0, 0, 0, 4, PlayerColor.RED),
+				Arguments.of(0, 0, 0, 4, Color.RED),
 				// Out of bounds
-				Arguments.of(-1, 0, 0, 0, PlayerColor.RED),
+				Arguments.of(-1, 0, 0, 0, Color.RED),
 				// Out of bounds
-				Arguments.of(0, 12, 0, 0, PlayerColor.RED));
+				Arguments.of(0, 12, 0, 0, Color.RED));
 	}
 
 	@ParameterizedTest
 	@MethodSource("validAttackProvider")
-	void validAttack(int tr, int tc, int fr, int fc, PlayerColor color) {
+	void validAttack(int tr, int tc, int fr, int fc, Color color) {
 		testGame.moveUnit(0, 0, 1, 0);
-		assertThrows(InvalidMoveException.class, () -> MoveValidator.attackIsValid(tr, tc, fr, fc, testBoard, color));
+		assertEquals(false, MoveValidator.attackIsValid(tr, tc, fr, fc, testBoard, color));
 	}
 
 	static Stream<Arguments> validAttackProvider() {
 		return Stream.of(
 				// Out of bounds
-				Arguments.of(-1, 0, 0, 0, PlayerColor.RED),
+				Arguments.of(-1, 0, 0, 0, Color.RED),
 				// Out of bounds
-				Arguments.of(0, 12, 0, 0, PlayerColor.RED),
+				Arguments.of(0, 12, 0, 0, Color.RED),
 				//null unit attacks
-				Arguments.of(0, 0, 1, 0, PlayerColor.RED),
+				Arguments.of(0, 0, 1, 0, Color.RED),
 				//attack null unit
-				Arguments.of(1, 0, 2, 0, PlayerColor.RED),
+				Arguments.of(1, 0, 2, 0, Color.RED),
 				//attack out of range
-				Arguments.of(0, 4, 1, 1, PlayerColor.RED));
+				Arguments.of(0, 4, 1, 1, Color.RED));
 	}
 	
 	@Test
@@ -130,23 +130,23 @@ class Test1 {
 	@Test
 	void testVillagerActions()
 	{
-		Unit v = new Unit(GameType.VILLAGER, PlayerColor.RED);
+		Unit v = new Unit(GameType.VILLAGER, Color.RED);
 		assertEquals(3, v.getActions().size());
 	}
 	
 	@Test
 	void testBuildings()
 	{
-		testBoard.setBuilding(0, 0, new Building(GameType.TOWN_HALL, PlayerColor.RED));
+		testBoard.setBuilding(0, 0, new Building(GameType.TOWN_HALL, Color.RED));
 		assertEquals(GameType.TOWN_HALL, testBoard.getBuildingAt(0, 0).getType());
 	}
 	
 	@Test
 	void testGameBuilding()
 	{
-//		testGame.addBuilding(0, 0, new Building(GameType.TOWN_HALL, PlayerColor.RED));
+//		testGame.addBuilding(0, 0, new Building(GameType.TOWN_HALL, Color.RED));
 //		testGame.printBoard();
-		testGame.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
+		testGame.addUnit(2, 2, new Unit(GameType.VILLAGER, Color.RED));
 		testGame.build(2, 2, GameType.TOWN_HALL);
 		testGame.endTurn();
 		testGame.endTurn();

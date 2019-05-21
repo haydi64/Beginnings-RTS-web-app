@@ -23,7 +23,7 @@ buildings can be built anywhere in this version		DONE
 
 Refactoring
 	add rules class that holds all the values of things like def and atk		DONE
-	add gameobject factory to create objects
+	add gameobject factory to create objects		??
 	
 	
 -----------------------------------------------------------------------
@@ -40,4 +40,4 @@ Add border around all possible destinations when moving
 add end turn button		DONE
 Add indicator to which team is playing		DONE
 Add game over		DONE
-change color of pieces
+change color of pieces		DONE (kind of)

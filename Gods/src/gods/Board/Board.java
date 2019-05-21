@@ -48,9 +48,9 @@ public class Board
 				Unit unit = this.getUnitAt(i, j);
 				
 				if(building != null)
-					RenderObject.renderUnit(i, j, building.getType(), g);
+					RenderObject.renderUnit(i, j, building, g);
 				if(unit != null)
-					RenderObject.renderUnit(i, j, unit.getType(), g);
+					RenderObject.renderUnit(i, j, unit, g);
 					
 			}
 		}

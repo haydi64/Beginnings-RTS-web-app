@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import gods.Entities.Actions;
+import gods.Entities.GameObject;
 import gods.Entities.GameType;
 
 public class RenderObject
@@ -28,18 +29,18 @@ public class RenderObject
 		}
 	}
 	
-	public static void renderUnit(int row, int column, GameType type, Graphics g)
+	public static void renderUnit(int row, int column, GameObject obj, Graphics g)
 	{
 		int pixelX = row * tileStart;
 		int pixelY = column * tileStart;
 		BufferedImageLoader image = new BufferedImageLoader();
-		BufferedImage icon = image.loadImage(getIconPath(type));
+		BufferedImage icon = image.loadImage(getIconPath(obj.getType()));
 		//almost working, need to find the bounds
-//		int red = Color.red.getRGB();
-//		for(int i = 0; i < icon.getWidth(); i++)
-//			for(int j = 0; j < icon.getHeight(); j++)
-//				if(icon.getRGB(i, j) == Color.black.getRGB())
-//					icon.setRGB(i, j, red);
+		int color = obj.getColor().getRGB();
+		for(int i = 0; i < icon.getWidth(); i++)
+			for(int j = 0; j < icon.getHeight(); j++)
+				if(icon.getRGB(i, j) == Color.black.getRGB())
+					icon.setRGB(i, j, color);
 		g.drawImage(icon, pixelX+9, pixelY+9, null);
 	}
 	

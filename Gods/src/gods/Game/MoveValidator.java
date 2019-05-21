@@ -1,5 +1,6 @@
 package gods.Game;
 
+import java.awt.Color;
 import gods.Board.Board;
 import gods.Board.Square;
 import gods.Entities.Actions;
@@ -11,7 +12,7 @@ public class MoveValidator
 {
 
 	public static boolean moveIsValid(int fromRow, int fromColumn, int toRow,
-			int toColumn, Board theBoard, PlayerColor color)
+			int toColumn, Board theBoard, Color color)
 	{
 		boolean isValid = true;
 
@@ -38,7 +39,7 @@ public class MoveValidator
 	}
 
 	public static boolean attackIsValid(Square from, Square to,
-			Board theBoard, PlayerColor color)
+			Board theBoard, Color color)
 	{
 		boolean isValid = true;
 
@@ -64,7 +65,7 @@ public class MoveValidator
 	}
 
 	public static boolean attackIsValid(int fromRow, int fromColumn, int toRow,
-			int toColumn, Board theBoard, PlayerColor color)
+			int toColumn, Board theBoard, Color color)
 	{
 		boolean isValid = true;
 

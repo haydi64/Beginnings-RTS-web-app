@@ -15,12 +15,12 @@ public class GameState
 	private int currentPlayer;
 	private ButtonState buttonState;
 	private boolean gameOver;
-	private static Font sanSerif = new Font("SanSerif", Font.BOLD, 20);
+	private Font sanSerif = new Font("SanSerif", Font.BOLD, 20);
 
-	public GameState(PlayerColor... colors)
+	public GameState(Color... colors)
 	{
 		players = new ArrayList<Player>();
-		for (PlayerColor color : colors) {
+		for (Color color : colors) {
 			players.add(new Player(color));
 		}
 
@@ -42,7 +42,7 @@ public class GameState
 
 	public void addGameObject(GameObject gameObject)
 	{
-		PlayerColor color = gameObject.getColor();
+		Color color = gameObject.getColor();
 		Player player = getPlayer(color);
 		if (player != null)
 			player.addObject(gameObject);
@@ -52,7 +52,7 @@ public class GameState
 
 	public void removeGameObject(GameObject gameObject)
 	{
-		PlayerColor color = gameObject.getColor();
+		Color color = gameObject.getColor();
 		Player player = getPlayer(color);
 		if (player != null)
 			player.removeObject(gameObject);
@@ -61,7 +61,7 @@ public class GameState
 					.println("Player does not exist in GameState.removeGameObject");
 	}
 
-	private Player getPlayer(PlayerColor color)
+	private Player getPlayer(Color color)
 	{
 		Player player = null;
 		for (Player p : players) {
@@ -87,7 +87,7 @@ public class GameState
 		return playerLost;
 	}
 
-	public void playerLoses(PlayerColor color)
+	public void playerLoses(Color color)
 	{
 		Player player = getPlayer(color);
 		players.remove(player);
@@ -123,9 +123,9 @@ public class GameState
 		g.setColor(Color.black);
 		g.setFont(this.sanSerif);
 		Player player = getCurrentPlayer();
-		String info = "Turn: " + turnNumber + "    Player: "
-				+ player.getColor().toString() + "    Gold: " + player.getGold()
-				+ "    Food: " + player.getFood();
+		String color = (player.getColor() == Color.red) ? "Red" : "Blue";
+		String info = "Turn: " + turnNumber + "    Player: " + color + "    Gold: "
+				+ player.getGold() + "    Food: " + player.getFood();
 		g.drawString(info, 25, 25);
 	}
 
@@ -136,12 +136,12 @@ public class GameState
 		player.addGold(-1 * cost[0]);
 		player.addFood(-1 * cost[1]);
 	}
-	
+
 	public boolean isGameOver()
 	{
 		return gameOver;
 	}
-	
+
 	public void gameOver()
 	{
 		gameOver = true;

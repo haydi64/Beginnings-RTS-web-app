@@ -1,19 +1,19 @@
 package gods.Entities;
 
+import java.awt.Color;
 import java.util.List;
-import gods.Game.PlayerColor;
 import gods.Game.Rules;
 
 public abstract class GameObject
 {
 	protected final GameType type;
-	protected final PlayerColor color;
+	protected final Color color;
 	protected List<Actions> actions;
 	protected int defenseRating, attackRating;
 	protected int health;
 	protected int totalHealth;
 
-	public GameObject(GameType type, PlayerColor color)
+	public GameObject(GameType type, Color color)
 	{
 		this.type = type;
 		this.color = color;
@@ -82,7 +82,7 @@ public abstract class GameObject
 		return this.type;
 	}
 
-	public PlayerColor getColor()
+	public Color getColor()
 	{
 		return this.color;
 	}

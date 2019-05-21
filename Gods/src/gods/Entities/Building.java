@@ -1,5 +1,6 @@
 package gods.Entities;
 
+import java.awt.Color;
 import java.util.List;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
@@ -9,7 +10,7 @@ public class Building extends GameObject
 	private List<GameType> listOfUnits;
 	private int goldBonus, foodBonus;
 
-	public Building(GameType type, PlayerColor color)
+	public Building(GameType type, Color color)
 	{
 		super(type, color);
 		listOfUnits = Rules.getTrainableUnits(type);

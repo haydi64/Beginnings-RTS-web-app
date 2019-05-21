@@ -32,7 +32,7 @@ public class Game
 	public Game(Board board)
 	{
 		theBoard = board;
-		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
+		state = new GameState(Color.RED, Color.BLUE);
 		popup = null;
 		savedSquare = null;
 		possibleMoves = new ArrayList<Square>();
@@ -41,12 +41,12 @@ public class Game
 	public Game()
 	{
 		this(new Board(20, 20));
-		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
-		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
-//		this.addBuilding(2, 3, new Building(GameType.BARRACKS, PlayerColor.RED));
-//		this.addUnit(4, 4, new Unit(GameType.SPEAR, PlayerColor.BLUE));
-		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
-		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
+		this.addUnit(2, 2, new Unit(GameType.VILLAGER, Color.RED));
+		this.addUnit(1, 2, new Unit(GameType.SWORD, Color.RED));
+//		this.addBuilding(2, 3, new Building(GameType.BARRACKS, Color.RED));
+//		this.addUnit(4, 4, new Unit(GameType.SPEAR, Color.BLUE));
+		this.addUnit(18, 18, new Unit(GameType.VILLAGER, Color.BLUE));
+		this.addUnit(18, 17, new Unit(GameType.SWORD, Color.BLUE));
 	}
 
 	public void tryMove()
