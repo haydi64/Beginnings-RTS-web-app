@@ -1,52 +1,40 @@
 package gods;
 
-import java.io.IOException;
-import java.util.Scanner;
-import gods.Board.Board;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import gods.Board.BufferedImageLoader;
+import gods.Board.RenderObject;
 import gods.Entities.GameType;
-import gods.Entities.Unit;
-import gods.Game.Game;
-import gods.Game.PlayerColor;
+import gods.View.Window;
 
-public class Main {
+public class Main
+{
 
-	public static void main(String[] args) throws IOException {
-		System.out.println("Start Game:");
-		Scanner command = new Scanner(System.in);
-		boolean running = true;
-		Board board = new Board(10, 10);
-		board.setUnit(0, 0, new Unit(GameType.SPEAR, PlayerColor.RED));
-		board.setUnit(0, 4, new Unit(GameType.SPEAR, PlayerColor.RED));
-		board.setUnit(1, 1, new Unit(GameType.SWORD, PlayerColor.BLUE));
-		Game game = new Game(board);
+	/**
+	 * Main method that is used to start the game
+	 * @param args: no arguments
+	 */
+	public static void main(String args[])
+	{
+
+//		BufferedImageLoader image = new BufferedImageLoader();
+//		BufferedImage icon = image.loadImage(RenderObject.getIconPath(GameType.SWORD));
+//
+//		for(int i = 0; i < icon.getWidth(); i++)
+//		{
+//			for(int j = 0; j < icon.getHeight(); j++)
+//			{
+//				Color c = new Color(icon.getRGB(i, j), true);
+//				System.out.print("( " + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ", " + c.getAlpha() + "),  ");
+////				System.out.print(icon.getRGB(i, j) + ", ");
+//			}
+//			System.out.print('\n');
+//		}
 		
-		game.printBoard();
-
-		while (running) {
-			String[] line = command.nextLine().split(" ");
-			switch (line[0]) {
-			case "exit":
-				running = false;
-				break;
-			case "move":
-				game.moveUnit(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3]),
-						Integer.parseInt(line[4]));
-				break;
-			case "attack":
-				game.attackUnit(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3]),
-						Integer.parseInt(line[4]));
-				break;
-			case "end":
-				game.endTurn();
-				System.out.println("Ended Turn");
-				break;
-			default:
-				System.out.println("Not reccognized");
-				break;
-			}
-			game.printBoard();
-		}
-		command.close();
+		GameLoop gameLoop = new GameLoop();
+		new Window(GameLoop.WIDTH, GameLoop.HEIGHT, "Game", gameLoop);
+		gameLoop.start();
 	}
 
 }

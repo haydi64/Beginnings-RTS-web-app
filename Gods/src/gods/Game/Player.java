@@ -1,5 +1,6 @@
 package gods.Game;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import gods.Entities.Building;
@@ -9,11 +10,11 @@ import gods.Entities.Unit;
 public class Player
 {
 
-	private final PlayerColor color;
+	private final Color color;
 	private List<GameObject> objects;
 	private int gold, food;
 
-	public Player(PlayerColor color)
+	public Player(Color color)
 	{
 		this.color = color;
 		gold = 350;
@@ -21,7 +22,7 @@ public class Player
 		objects = new ArrayList<GameObject>();
 	}
 
-	public PlayerColor getColor()
+	public Color getColor()
 	{
 		return this.color;
 	}

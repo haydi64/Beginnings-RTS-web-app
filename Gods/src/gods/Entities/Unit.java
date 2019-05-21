@@ -1,5 +1,6 @@
 package gods.Entities;
 
+import java.awt.Color;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
 
@@ -9,7 +10,7 @@ public class Unit extends GameObject {
 	protected double hunger;
 	protected boolean hasAttacked, hasMoved;
 
-	public Unit(GameType type, PlayerColor color) {
+	public Unit(GameType type, Color color) {
 		super(type, color);
 		this.moveLimit = 7;
 		this.range = 1;
@@ -63,6 +64,12 @@ public class Unit extends GameObject {
 	public void setAttacked(boolean bool)
 	{
 		this.hasAttacked = bool;
+		if(hasAttacked)
+			hasMoved = true;
+//		if(hasAttacked)
+//			actions.remove(Actions.Attack);
+//		else if(!actions.contains(Actions.Attack))
+//			actions.add(Actions.Attack);
 	}
 	
 	public boolean hasMoved()
@@ -73,6 +80,10 @@ public class Unit extends GameObject {
 	public void setMoved(boolean bool)
 	{
 		this.hasMoved = bool;
+//		if(hasMoved)
+//			actions.remove(Actions.Move);
+//		else if(!actions.contains(Actions.Move))
+//			actions.add(Actions.Move);
 	}
 
 	@Override
@@ -95,5 +106,14 @@ public class Unit extends GameObject {
 	@Override
 	public Unit train(GameType type) {
 		return null;
+	}
+	
+	@Override
+	public Building build(GameType gType)
+	{
+		Building building = null;
+		if(this.type == GameType.VILLAGER && !gType.isUnit())
+			building = new Building(gType, color);
+		return building;
 	}
 }

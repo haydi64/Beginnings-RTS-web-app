@@ -1,5 +1,6 @@
 package gods.Entities;
 
+import java.awt.Color;
 import java.util.List;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
@@ -9,7 +10,7 @@ public class Building extends GameObject
 	private List<GameType> listOfUnits;
 	private int goldBonus, foodBonus;
 
-	public Building(GameType type, PlayerColor color)
+	public Building(GameType type, Color color)
 	{
 		super(type, color);
 		listOfUnits = Rules.getTrainableUnits(type);
@@ -21,7 +22,11 @@ public class Building extends GameObject
 	{
 		Unit unit;
 		if(listOfUnits.contains(gameType))
+		{
 			unit = new Unit(gameType, color);
+			unit.setMoved(true);
+			unit.setAttacked(true);
+		}
 		else unit = null;
 		return unit;
 	}
@@ -58,6 +63,12 @@ public class Building extends GameObject
 	public AttackResult attack(Unit defender)
 	{
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Building build(GameType gameType)
+	{
 		return null;
 	}
 

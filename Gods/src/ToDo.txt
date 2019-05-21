@@ -14,13 +14,32 @@ Unit
 Players
 	red vs blue		DONE
 	all enemies are dead == victory		DONE
-	all buildings and enemies are dead == victory
+	all buildings and enemies are dead == victory		DONE
 	
 add Resource buildings that give gold/food	DONE
-use gold/food to train/build
-if not enough gold/food then cannot build/train
-buildings can be built anywhere in this version
+use gold/food to train/build		DONE
+if not enough gold/food then cannot build/train		DONE
+buildings can be built anywhere in this version		DONE
 
 Refactoring
 	add rules class that holds all the values of things like def and atk		DONE
-	add gameobject factory to create objects
+	add gameobject factory to create objects		??
+	
+	
+-----------------------------------------------------------------------
+Unit removes actions when they have been completed		initial impl. DONE
+Make popup abstract class		DONE
+Add building popup		DONE
+Add training popup		DONE
+Add attacking		DONE
+
+Add border around all possible destinations when moving
+**REFACTOR
+	Add list of buffered images that can be accessed to increase efficiency
+
+
+add end turn button		DONE
+Add indicator to which team is playing		DONE
+Add game over		DONE
+change color of pieces		DONE (kind of)
+	Re-use PlayerColor, but add toColor function that goes from enum -> java.awt.Color
