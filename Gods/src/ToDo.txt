@@ -35,6 +35,7 @@ Add attacking		DONE
 
 Add border around all possible destinations when moving
 **REFACTOR
+	Add list of buffered images that can be accessed to increase efficiency
 
 
 add end turn button		DONE

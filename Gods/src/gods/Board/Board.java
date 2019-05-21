@@ -11,6 +11,10 @@ import gods.Entities.Unit;
 import gods.Game.MoveValidator;
 import gods.View.Direction;
 
+/**
+ * Keeps track of the map and the positions of each game object
+ *
+ */
 public class Board
 {
 
@@ -28,6 +32,11 @@ public class Board
 		selectedSquare = new Square(0, 0);
 	}
 
+	/**
+	 * Checks if all the squares are within the map
+	 * @param squares list of squares to be tested
+	 * @return true if all are within the map bounds, false if one is out of bounds
+	 */
 	public boolean squaresInBounds(Square... squares)
 	{
 		boolean inBounds = true;
@@ -39,6 +48,10 @@ public class Board
 		return inBounds;
 	}
 
+	/**
+	 * Renders all of the tiles and game objects
+	 * @param g the graphics object which is needed for drawing to the canvas
+	 */
 	public void render(Graphics g)
 	{
 		for (int i = 0; i < rows; i++) {
@@ -59,6 +72,10 @@ public class Board
 		}
 	}
 
+	/**
+	 * Moves the current 'selected square' to a new square in the given direction
+	 * @param d: the direction to move the selected square
+	 */
 	public void changeSelectedTile(Direction d)
 	{
 		int x = selectedSquare.getRow();
@@ -84,6 +101,11 @@ public class Board
 		}
 	}
 	
+	/**
+	 * Used to switch the selected square to a square within a list of squares
+	 * @param possibleMoves list of squares that can be selected
+	 * @param dir the direction, up or down the list
+	 */
 	public void changePossibleTile(List<Square> possibleMoves, Direction dir)
 	{
 
@@ -97,8 +119,14 @@ public class Board
 		setSelectedSquare(possibleMoves.get(index));
 	}
 
+	/**
+	 * Gets the list of all reachable squares that a unit can move to
+	 * @param square: the square the unit is currently on
+	 * @return the list of all squares in movement range
+	 */
 	public List<Square> squaresInMoveRange(Square square)
 	{
+		//Will have to update if there are different terrain types with different movement costs
 		List<Square> squares = new ArrayList<Square>();
 		Unit unit = getUnitAt(square);
 		int range = unit.getMoveLimit();
@@ -112,15 +140,19 @@ public class Board
 		endY = (endY >= columns) ? columns : endY;
 		for(int i = startX; i < rows; i++) {
 			for(int j = startY; j < columns; j++) {
-				Unit toUnit = getUnitAt(i, j);
 				Square to = new Square(i, j);
 				if(MoveValidator.moveIsValid(square, to, this, unit.getColor()))
-					squares.add(new Square(i, j));
+					squares.add(to);
 			}
 		}
 		return squares;
 	}
 	
+	/**
+	 * Gets a list of all squares that a unit can attack
+	 * @param square the square that the unit is currently on
+	 * @return a list of squares in attack range
+	 */
 	public List<Square> squaresInAttackRange(Square square)
 	{
 		List<Square> squares = new ArrayList<Square>();
@@ -145,6 +177,7 @@ public class Board
 		return squares;
 	}
 
+	//Setters and getters:
 	public void setUnit(int row, int column, Unit unit)
 	{
 		unitMap.put(new Square(row, column), unit);
@@ -190,6 +223,9 @@ public class Board
 		this.selectedSquare = square;
 	}
 
+	/**
+	 * Prints the current board layout to the console
+	 */
 	public void printBoard()
 	{
 		for (int i = 0; i < rows; i++) {
