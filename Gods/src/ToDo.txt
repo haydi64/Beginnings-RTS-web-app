@@ -41,3 +41,4 @@ add end turn button		DONE
 Add indicator to which team is playing		DONE
 Add game over		DONE
 change color of pieces		DONE (kind of)
+	Re-use PlayerColor, but add toColor function that goes from enum -> java.awt.Color

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import gods.GameLoop;
 import gods.Board.Board;
+import gods.Board.RenderObject;
 import gods.Board.Square;
 import gods.Entities.Actions;
 import gods.Entities.AttackResult;
@@ -43,8 +44,7 @@ public class Game
 		this(new Board(20, 20));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, Color.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, Color.RED));
-//		this.addBuilding(2, 3, new Building(GameType.BARRACKS, Color.RED));
-//		this.addUnit(4, 4, new Unit(GameType.SPEAR, Color.BLUE));
+//		this.addUnit(3, 3, new Unit(GameType.SPEAR, Color.blue));
 		this.addUnit(18, 18, new Unit(GameType.VILLAGER, Color.BLUE));
 		this.addUnit(18, 17, new Unit(GameType.SWORD, Color.BLUE));
 	}
@@ -59,7 +59,6 @@ public class Game
 				state.getCurrentPlayer().getColor());
 		if (isValid) {
 			moveUnit(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
-			// savedSquare = null;
 			setButtonState(ButtonState.Normal);
 		} else {
 			theBoard.setSelectedSquare(savedSquare);
@@ -174,9 +173,12 @@ public class Game
 	public void render(Graphics g)
 	{
 		theBoard.render(g);
+		for(Square s: possibleMoves)
+			RenderObject.renderOverlay(s.getRow(), s.getColumn(), g, state.getButtonState());
 		if (popup != null)
 			popup.render(g);
 		if (state.isGameOver()) {
+			//TEST
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect(GameLoop.WIDTH / 2, GameLoop.HEIGHT, 100, 50);
 			g.drawString("GAME OVER", GameLoop.WIDTH / 2 + 25, GameLoop.HEIGHT / 2 + 25);
@@ -201,7 +203,6 @@ public class Game
 	public void addPopup()
 	{
 		Square selected = getSelectedSquare();
-		// GameObject obj = getGameObjectAt(selected.getRow(), selected.getColumn());
 		Unit unit = theBoard.getUnitAt(selected);
 		Building building = theBoard.getBuildingAt(selected);
 		if (unit != null && unit.getColor() == state.getCurrentPlayer().getColor()) {
@@ -221,14 +222,7 @@ public class Game
 
 	public void changePossibleTile(Direction dir)
 	{
-		int index = possibleMoves.indexOf(getSelectedSquare());
-		if(dir == Direction.UP)
-			index++;
-		else if (dir == Direction.DOWN)
-			index--;
-		index = (index >= possibleMoves.size()) ? 0 : index;
-		index = (index < 0) ? possibleMoves.size() - 1 : index;
-		theBoard.setSelectedSquare(possibleMoves.get(index));
+		theBoard.changePossibleTile(possibleMoves, dir);
 	}
 
 	public void cycleActions(Direction dir)
@@ -242,7 +236,6 @@ public class Game
 			System.out.print("popup was not there");
 			return;
 		}
-		System.out.println(popup.getCurrentItem());
 		Actions action = Actions.stringToActions(popup.getCurrentItem());
 		GameType type = GameType.stringToType(popup.getCurrentItem());
 		Square selected = getSelectedSquare();
@@ -259,18 +252,21 @@ public class Game
 
 	private void newAction(Actions action, Square selectedSquare)
 	{
+		//Move this function?
 		switch (action) {
 			case Cancel:
 				setButtonState(ButtonState.Normal);
 				break;
 			case Move:
 				savedSquare = selectedSquare;
+				possibleMoves = theBoard.squaresInMoveRange(selectedSquare);
 				setButtonState(ButtonState.MoveUnit);
 				break;
 			case Attack:
 				savedSquare = selectedSquare;
-				possibleMoves = getUnitsInRange();
-				theBoard.setSelectedSquare(possibleMoves.get(0));
+				possibleMoves = theBoard.squaresInAttackRange(selectedSquare);
+				if(possibleMoves.size() > 0)
+					theBoard.setSelectedSquare(possibleMoves.get(0));
 				setButtonState(ButtonState.AttackUnit);
 				break;
 			case Build:
@@ -287,10 +283,6 @@ public class Game
 		}
 	}
 	
-	private List<Square> getUnitsInRange(){
-		return theBoard.squaresInAttackRange(getSelectedSquare());
-	}
-
 	public GameObject getGameObjectAt(int row, int column)
 	{
 		GameObject obj;
@@ -312,6 +304,7 @@ public class Game
 			popup = null;
 		if (buttonState == ButtonState.Normal) {
 			savedSquare = null;
+			this.possibleMoves = new ArrayList<Square>();
 		}
 		state.setButtonState(buttonState);
 	}

@@ -18,6 +18,10 @@ import gods.Game.Game;
 import gods.View.Camera;
 import gods.View.KeyInput;
 
+/**
+ * This class creates the loop that runs the game
+ * It is also a canvas object that renders the game to the window
+ */
 public class GameLoop extends Canvas implements Runnable
 {
 
@@ -35,12 +39,18 @@ public class GameLoop extends Canvas implements Runnable
     	this.addKeyListener(new KeyInput(game));
     }
 	
+    /**
+     * Starts the game thread that updates and renders all the game objects
+     */
     public synchronized void start() {
     	running = true;
     	thread = new Thread(this);
     	thread.start();
     }
     
+    /**
+     * Closes the thread when the game is closed
+     */
     public synchronized void stop() {
     	running = false;
     	try {
@@ -51,6 +61,9 @@ public class GameLoop extends Canvas implements Runnable
     	}
     }
     
+    /**
+     * This is the game loop that runs in the separate thread
+     */
 	@Override
 	public void run()
 	{
@@ -81,6 +94,9 @@ public class GameLoop extends Canvas implements Runnable
         stop();
 	}
 	
+	/**
+	 * Updates every frame to update game objects
+	 */
 	private void tick() {
         try{
             camera.tick(game.getSelectedSquare());
@@ -89,6 +105,9 @@ public class GameLoop extends Canvas implements Runnable
         }
 	}
 	
+	/**
+	 * Renders each game object
+	 */
 	private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs==null){
@@ -103,15 +122,17 @@ public class GameLoop extends Canvas implements Runnable
         
         int offset = 150;
 
+        //First translate everything to the origin
         g2d.translate(-camera.getX() - offset,-camera.getY() - offset);
 
+        //Render all the game objects
         game.render(g);
 
+        //Translate everything back to the camera's position
         g2d.translate(camera.getX() + offset,camera.getY() + offset);
         
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, WIDTH, 50);
-        
         game.renderInfo(g);
         
 

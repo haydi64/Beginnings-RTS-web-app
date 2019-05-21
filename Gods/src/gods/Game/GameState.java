@@ -1,10 +1,10 @@
 package gods.Game;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import gods.Board.RenderObject;
 import gods.Entities.GameObject;
 import gods.View.ButtonState;
 
@@ -15,7 +15,6 @@ public class GameState
 	private int currentPlayer;
 	private ButtonState buttonState;
 	private boolean gameOver;
-	private Font sanSerif = new Font("SanSerif", Font.BOLD, 20);
 
 	public GameState(Color... colors)
 	{
@@ -120,13 +119,7 @@ public class GameState
 
 	public void renderPlayerInfo(Graphics g)
 	{
-		g.setColor(Color.black);
-		g.setFont(this.sanSerif);
-		Player player = getCurrentPlayer();
-		String color = (player.getColor() == Color.red) ? "Red" : "Blue";
-		String info = "Turn: " + turnNumber + "    Player: " + color + "    Gold: "
-				+ player.getGold() + "    Food: " + player.getFood();
-		g.drawString(info, 25, 25);
+		RenderObject.renderPlayerInfo(g, getCurrentPlayer(), turnNumber);
 	}
 
 	public void takeCost(GameObject obj)

@@ -11,6 +11,30 @@ import gods.Entities.Unit;
 public class MoveValidator
 {
 
+	public static boolean moveIsValid(Square from, Square to, Board theBoard, Color color)
+	{
+		boolean isValid = true;
+
+		Unit fromUnit = theBoard.getUnitAt(from);
+		Unit toUnit = theBoard.getUnitAt(to);
+
+		if (!theBoard.squaresInBounds(from, to))
+			isValid = false;
+		else if (fromUnit == null)
+			isValid = false;
+		else if (fromUnit.getColor() != color)
+			isValid = false;
+		else if (!fromUnit.getActions().contains(Actions.Move))
+			isValid = false;
+		else if (fromUnit.getMoveLimit() < from.getManDistance(to))
+			isValid = false;
+		else if (toUnit != null)
+			isValid = false;
+		else if (fromUnit.hasMoved())
+			isValid = false;
+		return isValid;
+	}
+
 	public static boolean moveIsValid(int fromRow, int fromColumn, int toRow,
 			int toColumn, Board theBoard, Color color)
 	{

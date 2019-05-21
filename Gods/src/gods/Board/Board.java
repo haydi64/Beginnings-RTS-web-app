@@ -1,5 +1,6 @@
 package gods.Board;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,10 +44,12 @@ public class Board
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++)
 			{
-				RenderObject.renderSquare(this, i, j, g, this.getTerrainAt(i, j));
+				RenderObject.renderSquare(i, j, g, getTerrainAt(i, j).getColor());
 				Building building = this.getBuildingAt(i, j);
 				Unit unit = this.getUnitAt(i, j);
 				
+				if(selectedSquare.equals(new Square(i, j)))
+					RenderObject.outlineSquare(g, selectedSquare, Color.white);
 				if(building != null)
 					RenderObject.renderUnit(i, j, building, g);
 				if(unit != null)
@@ -79,6 +82,67 @@ public class Board
 					selectedSquare = new Square(x + 1, y);
 				break;
 		}
+	}
+	
+	public void changePossibleTile(List<Square> possibleMoves, Direction dir)
+	{
+
+		int index = possibleMoves.indexOf(getSelectedSquare());
+		if(dir == Direction.UP)
+			index++;
+		else if (dir == Direction.DOWN)
+			index--;
+		index = (index >= possibleMoves.size()) ? 0 : index;
+		index = (index < 0) ? possibleMoves.size() - 1 : index;
+		setSelectedSquare(possibleMoves.get(index));
+	}
+
+	public List<Square> squaresInMoveRange(Square square)
+	{
+		List<Square> squares = new ArrayList<Square>();
+		Unit unit = getUnitAt(square);
+		int range = unit.getMoveLimit();
+		int startX = square.getRow() - range;
+		int startY = square.getRow() - range;
+		int endX = square.getRow() + range;
+		int endY = square.getColumn() + range;
+		startX = (startX < 0) ? 0 : startX;
+		startY = (startY < 0) ? 0 : startY;
+		endX = (endX >= rows) ? rows : endX;
+		endY = (endY >= columns) ? columns : endY;
+		for(int i = startX; i < rows; i++) {
+			for(int j = startY; j < columns; j++) {
+				Unit toUnit = getUnitAt(i, j);
+				Square to = new Square(i, j);
+				if(MoveValidator.moveIsValid(square, to, this, unit.getColor()))
+					squares.add(new Square(i, j));
+			}
+		}
+		return squares;
+	}
+	
+	public List<Square> squaresInAttackRange(Square square)
+	{
+		List<Square> squares = new ArrayList<Square>();
+		Unit unit = getUnitAt(square);
+		int range = unit.getRange();
+		int startX = square.getRow() - range;
+		int startY = square.getRow() - range;
+		int endX = square.getRow() + range;
+		int endY = square.getColumn() + range;
+		startX = (startX < 0) ? 0 : startX;
+		startY = (startY < 0) ? 0 : startY;
+		endX = (endX >= rows) ? rows : endX;
+		endY = (endY >= columns) ? columns : endY;
+		for(int i = startX; i < rows; i++) {
+			for(int j = startY; j < columns; j++) {
+				Unit toUnit = getUnitAt(i, j);
+				Square to = new Square(i, j);
+				if(MoveValidator.attackIsValid(square, to, this, unit.getColor()))
+					squares.add(new Square(i, j));
+			}
+		}
+		return squares;
 	}
 
 	public void setUnit(int row, int column, Unit unit)
@@ -146,29 +210,5 @@ public class Board
 			}
 			System.out.print('\n');
 		}
-	}
-
-	public List<Square> squaresInAttackRange(Square square)
-	{
-		List<Square> squares = new ArrayList<Square>();
-		Unit unit = getUnitAt(square);
-		int range = unit.getRange();
-		int startX = square.getRow() - range;
-		int startY = square.getRow() - range;
-		int endX = square.getRow() + range;
-		int endY = square.getColumn() + range;
-		startX = (startX < 0) ? 0 : startX;
-		startY = (startY < 0) ? 0 : startY;
-		endX = (endX >= rows) ? rows : endX;
-		endY = (endY >= columns) ? columns : endY;
-		for(int i = startX; i < rows; i++) {
-			for(int j = startY; j < columns; j++) {
-				Unit toUnit = getUnitAt(i, j);
-				Square to = new Square(i, j);
-				if(MoveValidator.attackIsValid(square, to, this, unit.getColor()))
-					squares.add(new Square(i, j));
-			}
-		}
-		return squares;
 	}
 }
