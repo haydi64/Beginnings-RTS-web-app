@@ -41,6 +41,7 @@ public class GameLoop extends Canvas implements Runnable
     private StartMenu menu;
     
     public GameLoop() {
+    	RenderObject.initializeIcons();
     	camera = new Camera(0, 0);
     	game = new Game();
     	menu = new StartMenu();

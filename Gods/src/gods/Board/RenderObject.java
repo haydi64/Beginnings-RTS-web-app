@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 import gods.Entities.GameObject;
 import gods.Entities.GameType;
 import gods.Game.Player;
@@ -18,6 +20,14 @@ public class RenderObject
 	public static int tileSize = 48;
 	public static int tileStart = 50;
 	private static Font sanSerif = new Font("SanSerif", Font.PLAIN, 18);
+	private static Map<GameType, BufferedImage> icons = new HashMap<GameType, BufferedImage>();
+	
+	public static void initializeIcons()
+	{
+		BufferedImageLoader loader = new BufferedImageLoader();
+		for(GameType type: GameType.values())
+			icons.put(type, loader.loadImage(getIconPath(type)));
+	}
 
 	/**
 	 * Render a map tile
@@ -59,8 +69,7 @@ public class RenderObject
 	{
 		int pixelX = row * tileStart;
 		int pixelY = column * tileStart;
-		BufferedImageLoader image = new BufferedImageLoader();
-		BufferedImage icon = image.loadImage(getIconPath(obj.getType()));
+		BufferedImage icon = icons.get(obj.getType());
 		Color color = obj.getPlayerColor().getColor();
 		//Change the color to match the player
 		for(int i = 0; i < icon.getWidth(); i++)
