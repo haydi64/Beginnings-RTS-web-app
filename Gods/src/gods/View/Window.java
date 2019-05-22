@@ -14,7 +14,7 @@ public class Window extends Canvas
 {
     private static final long serialVersionUID = -240840600533728354L;
     
-	public Window(int width, int height, String title, GameLoop gameLoop)
+	public Window(int width, int height, String title, Canvas canvas)
 	{
         JFrame frame = new JFrame(title);
         frame.setPreferredSize(new Dimension(width,height));
@@ -26,7 +26,7 @@ public class Window extends Canvas
         JPanel panel = new JPanel(new GridLayout(0,1)); //Default layout manager is FlowLayout
         //You could change the layout here with panel.setLayout(new ..Layout);
         frame.getContentPane().add(panel);
-        panel.add(gameLoop);
+        panel.add(canvas);
         frame.setVisible(true);
 	}
 
