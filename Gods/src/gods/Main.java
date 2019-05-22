@@ -18,19 +18,7 @@ public class Main
 	public static void main(String args[])
 	{
 
-//		BufferedImageLoader image = new BufferedImageLoader();
-//		BufferedImage icon = image.loadImage(RenderObject.getIconPath(GameType.SWORD));
-//
-//		for(int i = 0; i < icon.getWidth(); i++)
-//		{
-//			for(int j = 0; j < icon.getHeight(); j++)
-//			{
-//				Color c = new Color(icon.getRGB(i, j), true);
-//				System.out.print("( " + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ", " + c.getAlpha() + "),  ");
-////				System.out.print(icon.getRGB(i, j) + ", ");
-//			}
-//			System.out.print('\n');
-//		}
+
 		
 		GameLoop gameLoop = new GameLoop();
 		new Window(GameLoop.WIDTH, GameLoop.HEIGHT, "Game", gameLoop);
