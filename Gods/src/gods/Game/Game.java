@@ -2,6 +2,7 @@ package gods.Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gods.GameLoop;
@@ -20,14 +21,19 @@ import gods.View.Direction;
 import gods.View.MyPopupMenu;
 import gods.View.TrainPopup;
 import gods.View.UnitPopup;
+import gods.save.Save;
 
 /**
  * 
  * comment
  */
-public class Game
+public class Game implements Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6047979186423690212L;
 	private Board theBoard;
 	private GameState state;
 	private MyPopupMenu popup;
@@ -311,5 +317,8 @@ public class Game
 			this.possibleMoves = new ArrayList<Square>();
 		}
 		state.setButtonState(buttonState);
+	}
+	public void save() {
+		Save.save(this, "save.ser");
 	}
 }

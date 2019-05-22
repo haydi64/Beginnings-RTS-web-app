@@ -20,6 +20,7 @@ import gods.View.Camera;
 import gods.View.Direction;
 import gods.View.KeyInput;
 import gods.View.StartMenu;
+import gods.save.Save;
 
 /**
  * This class creates the loop that runs the game
@@ -176,6 +177,9 @@ public class GameLoop extends Canvas implements Runnable
 		else if(currentScene == Scene.LOAD)
 		{
 			System.out.println("Load game here");
+			Game g = null;
+			game = Save.restore(g, "save.ser");
+			currentScene = Scene.GAME;
 			//Game g = new game();
 			//game = Save.restore(g, filepath);
 		}

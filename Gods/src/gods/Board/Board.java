@@ -2,6 +2,7 @@ package gods.Board;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import gods.View.Direction;
  * Keeps track of the map and the positions of each game object
  *
  */
-public class Board
+public class Board implements Serializable
 {
 
 	private final int rows, columns;

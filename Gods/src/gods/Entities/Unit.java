@@ -1,10 +1,11 @@
 package gods.Entities;
 
 import java.awt.Color;
+import java.io.Serializable;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
 
-public class Unit extends GameObject {
+public class Unit extends GameObject implements Serializable {
 
 	protected int moveLimit, range;
 	protected double hunger;
