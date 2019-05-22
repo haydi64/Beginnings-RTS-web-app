@@ -18,13 +18,13 @@ import gods.Entities.Unit;
 import gods.View.BuildPopup;
 import gods.View.ButtonState;
 import gods.View.Direction;
+import gods.View.Message;
 import gods.View.MyPopupMenu;
 import gods.View.TrainPopup;
 import gods.View.UnitPopup;
 import gods.save.Save;
 
 /**
- * 
  * comment
  */
 public class Game implements Serializable
@@ -37,6 +37,7 @@ public class Game implements Serializable
 	private Board theBoard;
 	private GameState state;
 	private MyPopupMenu popup;
+	private Message message;
 	private Square savedSquare;
 	private List<Square> possibleMoves;
 
@@ -45,6 +46,7 @@ public class Game implements Serializable
 		theBoard = board;
 		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
 		popup = null;
+		message = newTurnMessage();
 		savedSquare = null;
 		possibleMoves = new ArrayList<Square>();
 	}
@@ -54,7 +56,7 @@ public class Game implements Serializable
 		this(new Board(20, 20));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
-//		this.addUnit(3, 3, new Unit(GameType.SPEAR, PlayerColor.blue));
+		// this.addUnit(3, 3, new Unit(GameType.SPEAR, PlayerColor.blue));
 		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
 		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
@@ -146,7 +148,8 @@ public class Game implements Serializable
 		state.nextPlayer();
 		if (state.playersLeft() <= 1) {
 			gameOver();
-		}
+		} else
+			message = newTurnMessage();
 	}
 
 	public void addUnit(int row, int column, Unit unit)
@@ -183,18 +186,22 @@ public class Game implements Serializable
 	public void render(Graphics g)
 	{
 		theBoard.render(g);
-		for(Square s: possibleMoves)
-			RenderObject.renderOverlay(s.getRow(), s.getColumn(), g, state.getButtonState());
+		for (Square s : possibleMoves)
+			RenderObject.renderOverlay(s.getRow(), s.getColumn(), g,
+					state.getButtonState());
 		if (popup != null)
 			popup.render(g);
+		if (message != null)
+			message.render(g);
 		if (state.isGameOver()) {
-			//TEST
+			// TEST
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect(GameLoop.WIDTH / 2, GameLoop.HEIGHT, 100, 50);
-			g.drawString("GAME OVER", GameLoop.WIDTH / 2 + 25, GameLoop.HEIGHT / 2 + 25);
+			g.drawString("GAME OVER", GameLoop.WIDTH / 2 + 25,
+					GameLoop.HEIGHT / 2 + 25);
 		}
 	}
-	
+
 	public void renderInfo(Graphics g)
 	{
 		state.renderPlayerInfo(g);
@@ -210,16 +217,31 @@ public class Game implements Serializable
 		theBoard.changeSelectedTile(dir);
 	}
 
+	public Message newTurnMessage()
+	{
+		setButtonState(ButtonState.Message);
+		Player player = state.getCurrentPlayer();
+		int[] income = player.getIncome();
+		String text = "Player  " + player.getPlayerColor().toString()
+				+ ":     Gold  +" + income[0] + " Food  +" + income[1];
+		int height = GameLoop.HEIGHT / 3;
+		int offsetX = 100;
+		int width = 600;
+		return new Message(offsetX, height - offsetX, width, height, 24, Color.gray,
+				text);
+	}
+
 	public void addPopup()
 	{
 		Square selected = getSelectedSquare();
 		Unit unit = theBoard.getUnitAt(selected);
 		Building building = theBoard.getBuildingAt(selected);
-		if (unit != null && unit.getPlayerColor() == state.getCurrentPlayer().getPlayerColor()) {
+		if (unit != null && unit.getPlayerColor() == state.getCurrentPlayer()
+				.getPlayerColor()) {
 			popup = new UnitPopup(selected, unit);
 			setButtonState(ButtonState.Popup);
-		} else if (building != null
-				&& building.getPlayerColor() == state.getCurrentPlayer().getPlayerColor()) {
+		} else if (building != null && building.getPlayerColor() == state
+				.getCurrentPlayer().getPlayerColor()) {
 			popup = new TrainPopup(selected, building);
 			setButtonState(ButtonState.Popup);
 		}
@@ -262,7 +284,7 @@ public class Game implements Serializable
 
 	private void newAction(Actions action, Square selectedSquare)
 	{
-		//Move this function?
+		// Move this function?
 		switch (action) {
 			case Cancel:
 				setButtonState(ButtonState.Normal);
@@ -275,7 +297,7 @@ public class Game implements Serializable
 			case Attack:
 				savedSquare = selectedSquare;
 				possibleMoves = theBoard.squaresInAttackRange(selectedSquare);
-				if(possibleMoves.size() > 0)
+				if (possibleMoves.size() > 0)
 					theBoard.setSelectedSquare(possibleMoves.get(0));
 				setButtonState(ButtonState.AttackUnit);
 				break;
@@ -292,7 +314,7 @@ public class Game implements Serializable
 				break;
 		}
 	}
-	
+
 	public GameObject getGameObjectAt(int row, int column)
 	{
 		GameObject obj;
@@ -308,17 +330,21 @@ public class Game implements Serializable
 		return state.getButtonState();
 	}
 
-	private void setButtonState(ButtonState buttonState)
+	public void setButtonState(ButtonState buttonState)
 	{
 		if (buttonState != ButtonState.Popup)
 			popup = null;
+		if (buttonState != ButtonState.Message)
+			message = null;
 		if (buttonState == ButtonState.Normal) {
 			savedSquare = null;
 			this.possibleMoves = new ArrayList<Square>();
 		}
 		state.setButtonState(buttonState);
 	}
-	public void save() {
+
+	public void save()
+	{
 		Save.save(this, "src/resources/saves/save.ser");
 	}
 }

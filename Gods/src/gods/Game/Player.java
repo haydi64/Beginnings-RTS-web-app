@@ -58,6 +58,25 @@ public class Player implements Serializable
 			}
 		}
 	}
+	
+	public int[] getIncome()
+	{
+		int goldIncome = 0;
+		int foodIncome = 0;
+		for (GameObject gObject : objects)
+		{
+			if(!gObject.getType().isUnit())
+			{
+				Building building = (Building) gObject;
+				goldIncome += building.getGoldBonus();
+				foodIncome += building.getFoodBonus();
+			}
+		}
+		int[] resources = new int[2];
+		resources[0] = goldIncome;
+		resources[1] = foodIncome;
+		return resources;
+	}
 
 	public int objectsLeft()
 	{

@@ -59,6 +59,9 @@ public class KeyInput implements KeyListener
 				if(isSelectButton(key))
 					game.tryAttack();
 				break;
+			case Message:
+				if(isSelectButton(key))
+					game.setButtonState(ButtonState.Normal);
 		}
 
 		if (key == KeyEvent.VK_ESCAPE)
