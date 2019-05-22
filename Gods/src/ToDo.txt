@@ -33,13 +33,26 @@ Add building popup		DONE
 Add training popup		DONE
 Add attacking		DONE
 
-Add border around all possible destinations when moving
-**REFACTOR
-	Add list of buffered images that can be accessed to increase efficiency
-
+Add border around all possible destinations when moving		DONE
 
 add end turn button		DONE
 Add indicator to which team is playing		DONE
 Add game over		DONE
-change color of pieces		DONE (kind of)
-	Re-use PlayerColor, but add toColor function that goes from enum -> java.awt.Color
+change color of pieces		DONE
+	Re-use PlayerColor, but add toColor function that goes from enum -> java.awt.Color		DONE
+---------------------------------------------------------------------------
+**REFACTOR
+	Add list of buffered images that can be accessed to increase efficiency
+
+Start of turn a popup shows income for that turn and whose turn it is.
+Start menu instead of jumping into the game
+Ability to save games
+Display battle results
+Different terrain types that affect movement (Terrain enum has all the different types)
+Add defensive bonuses for terrain
+Add more units/buildings
+Building restrictions
+	Mines only in Mountains
+	Farms only in plains
+	Buildings must be next to a town hall
+Unit card displays when selected
