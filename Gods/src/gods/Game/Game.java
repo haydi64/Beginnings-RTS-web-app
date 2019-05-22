@@ -20,12 +20,13 @@ import gods.View.Direction;
 import gods.View.MyPopupMenu;
 import gods.View.TrainPopup;
 import gods.View.UnitPopup;
+import gods.save.Save;
 
 /**
  * 
  *
  */
-public class Game
+public class Game implements java.io.Serializable
 {
 
 	private Board theBoard;
@@ -311,5 +312,8 @@ public class Game
 			this.possibleMoves = new ArrayList<Square>();
 		}
 		state.setButtonState(buttonState);
+	}
+	public void save() {
+		Save.save(this, "save.ser");
 	}
 }

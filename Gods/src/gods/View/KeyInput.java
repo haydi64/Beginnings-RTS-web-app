@@ -27,6 +27,9 @@ public class KeyInput implements KeyListener
 					game.addPopup();
 				if (key == KeyEvent.VK_ENTER)
 					game.endTurn();
+				if (key == KeyEvent.VK_P)
+					game.save();
+				
 				break;
 			case Popup:
 				if (key == KeyEvent.VK_W)
