@@ -15,7 +15,7 @@ public abstract class MyPopupMenu
 	protected int pixelX, pixelY;
 	protected int width;
 	protected int textOffsetX, textOffsetY;
-	private static Font sanSerif = new Font("SanSerif", Font.PLAIN, 18);
+	private Font sanSerif = new Font("SanSerif", Font.PLAIN, 18);
 	private int currentAction;
 
 	public MyPopupMenu(Square square)
@@ -30,24 +30,6 @@ public abstract class MyPopupMenu
 		textOffsetY = pixelY + RenderObject.tileSize / 2;
 		currentAction = 0;
 	}
-	
-//	public PopupMenu(Square square, List<Actions> actions, Color color)
-//	{
-//		this.square = square;
-//		this.actions = new ArrayList<Actions>();
-//		this.actions.addAll(actions);
-//		this.actions.add(Actions.Cancel);
-//		this.color = color;
-//
-//		pixelX = (square.getRow() + 1) * RenderObject.tileStart;
-//		pixelY = square.getColumn() * RenderObject.tileStart;
-////		boxHeight = actions.size() + 1;
-////		height = RenderObject.tileSize * boxHeight + boxHeight;
-//		width = 100;
-//		textOffsetX = pixelX + 10;
-//		textOffsetY = pixelY + RenderObject.tileSize / 2;
-//		currentAction = 0;
-//	}
 	
 	protected abstract void initializeItems();
 
