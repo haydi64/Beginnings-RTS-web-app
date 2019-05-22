@@ -42,11 +42,11 @@ change color of pieces		DONE
 	Re-use PlayerColor, but add toColor function that goes from enum -> java.awt.Color		DONE
 ---------------------------------------------------------------------------
 **REFACTOR
-	Add list of buffered images that can be accessed to increase efficiency
+	Add list of buffered images that can be accessed to increase efficiency		DONE
 
-Start of turn a popup shows income for that turn and whose turn it is.
+Start of turn a popup shows income for that turn and whose turn it is.		HENRY
 Start menu instead of jumping into the game		DONE
-Ability to save games		HAYDEN
+Ability to save games		DONE
 Display battle results
 Different terrain types that affect movement (Terrain enum has all the different types)
 Add defensive bonuses for terrain
