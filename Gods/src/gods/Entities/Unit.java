@@ -10,7 +10,7 @@ public class Unit extends GameObject {
 	protected double hunger;
 	protected boolean hasAttacked, hasMoved;
 
-	public Unit(GameType type, Color color) {
+	public Unit(GameType type, PlayerColor color) {
 		super(type, color);
 		this.moveLimit = 7;
 		this.range = 1;

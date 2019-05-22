@@ -33,7 +33,7 @@ public class Game
 	public Game(Board board)
 	{
 		theBoard = board;
-		state = new GameState(Color.RED, Color.BLUE);
+		state = new GameState(PlayerColor.RED, PlayerColor.BLUE);
 		popup = null;
 		savedSquare = null;
 		possibleMoves = new ArrayList<Square>();
@@ -42,11 +42,11 @@ public class Game
 	public Game()
 	{
 		this(new Board(20, 20));
-		this.addUnit(2, 2, new Unit(GameType.VILLAGER, Color.RED));
-		this.addUnit(1, 2, new Unit(GameType.SWORD, Color.RED));
-//		this.addUnit(3, 3, new Unit(GameType.SPEAR, Color.blue));
-		this.addUnit(18, 18, new Unit(GameType.VILLAGER, Color.BLUE));
-		this.addUnit(18, 17, new Unit(GameType.SWORD, Color.BLUE));
+		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
+		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
+//		this.addUnit(3, 3, new Unit(GameType.SPEAR, PlayerColor.blue));
+		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
+		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
 	}
 
 	public void tryMove()
@@ -56,7 +56,7 @@ public class Game
 
 		boolean isValid = MoveValidator.moveIsValid(from.getRow(), from.getColumn(),
 				to.getRow(), to.getColumn(), theBoard,
-				state.getCurrentPlayer().getColor());
+				state.getCurrentPlayer().getPlayerColor());
 		if (isValid) {
 			moveUnit(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
 			setButtonState(ButtonState.Normal);
@@ -80,7 +80,7 @@ public class Game
 		Square to = getSelectedSquare();
 		boolean isValid = MoveValidator.attackIsValid(from.getRow(),
 				from.getColumn(), to.getRow(), to.getColumn(), theBoard,
-				state.getCurrentPlayer().getColor());
+				state.getCurrentPlayer().getPlayerColor());
 
 		if (isValid) {
 			attackUnit(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
@@ -205,11 +205,11 @@ public class Game
 		Square selected = getSelectedSquare();
 		Unit unit = theBoard.getUnitAt(selected);
 		Building building = theBoard.getBuildingAt(selected);
-		if (unit != null && unit.getColor() == state.getCurrentPlayer().getColor()) {
+		if (unit != null && unit.getPlayerColor() == state.getCurrentPlayer().getPlayerColor()) {
 			popup = new UnitPopup(selected, unit);
 			setButtonState(ButtonState.Popup);
 		} else if (building != null
-				&& building.getColor() == state.getCurrentPlayer().getColor()) {
+				&& building.getPlayerColor() == state.getCurrentPlayer().getPlayerColor()) {
 			popup = new TrainPopup(selected, building);
 			setButtonState(ButtonState.Popup);
 		}

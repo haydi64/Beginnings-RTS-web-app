@@ -141,7 +141,7 @@ public class Board
 		for(int i = startX; i < rows; i++) {
 			for(int j = startY; j < columns; j++) {
 				Square to = new Square(i, j);
-				if(MoveValidator.moveIsValid(square, to, this, unit.getColor()))
+				if(MoveValidator.moveIsValid(square, to, this, unit.getPlayerColor()))
 					squares.add(to);
 			}
 		}
@@ -170,7 +170,7 @@ public class Board
 			for(int j = startY; j < columns; j++) {
 				Unit toUnit = getUnitAt(i, j);
 				Square to = new Square(i, j);
-				if(MoveValidator.attackIsValid(square, to, this, unit.getColor()))
+				if(MoveValidator.attackIsValid(square, to, this, unit.getPlayerColor()))
 					squares.add(new Square(i, j));
 			}
 		}

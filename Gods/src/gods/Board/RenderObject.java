@@ -1,24 +1,31 @@
 package gods.Board;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
-import gods.Entities.Actions;
 import gods.Entities.GameObject;
 import gods.Entities.GameType;
 import gods.Game.Player;
 import gods.View.ButtonState;
 
+/**
+ * class for rendering all objects
+ *
+ */
 public class RenderObject
 {
 	public static int tileSize = 48;
 	public static int tileStart = 50;
 	private static Font sanSerif = new Font("SanSerif", Font.PLAIN, 18);
 
+	/**
+	 * Render a map tile
+	 * @param row: row in map
+	 * @param column: column in map
+	 * @param g: graphic object
+	 * @param color: color of the tile
+	 */
 	public static void renderSquare(int row, int column, Graphics g, Color color)
 	{
 		int pixelX = row * tileStart;
@@ -27,6 +34,12 @@ public class RenderObject
 		g.fillRect(pixelX, pixelY, tileSize, tileSize);
 	}
 
+	/**
+	 * Outline a map tile
+	 * @param g: graphics object
+	 * @param square: the square to be outlined
+	 * @param color: color of the outline
+	 */
 	public static void outlineSquare(Graphics g, Square square, Color color)
 	{
 		int pixelX = square.getRow() * tileStart;
@@ -35,16 +48,21 @@ public class RenderObject
 		g.drawRect(pixelX, pixelY, tileSize, tileSize);
 	}
 
+	/**
+	 * Render a game object
+	 * @param row: row game object is at
+	 * @param column: column game object is at
+	 * @param obj: Game object to be drawn
+	 * @param g: graphics object
+	 */
 	public static void renderUnit(int row, int column, GameObject obj, Graphics g)
 	{
 		int pixelX = row * tileStart;
 		int pixelY = column * tileStart;
 		BufferedImageLoader image = new BufferedImageLoader();
 		BufferedImage icon = image.loadImage(getIconPath(obj.getType()));
-		//almost working, need to find the bounds
-//		int color = obj.getColor().getRGB();
-		Color color = obj.getColor();
-//		dye(icon, color, pixelX, pixelY);
+		Color color = obj.getPlayerColor().getColor();
+		//Change the color to match the player
 		for(int i = 0; i < icon.getWidth(); i++)
 			for(int j = 0; j < icon.getHeight(); j++)
 			{
@@ -54,18 +72,28 @@ public class RenderObject
 					Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), pixel.getAlpha());
 					icon.setRGB(i, j, newColor.getRGB());
 				}
-//				icon.setRGB(icon.getRGB(x, y), arg1, arg2);
-//				if(icon.getRGB(i, j) == Color.black.getRGB())
-//					icon.setRGB(i, j, color);
 			}
 		g.drawImage(icon, pixelX+9, pixelY+9, null);
 	}
 
-	public static String getIconPath(GameType type)
+	/**
+	 * Gets the path of the game objects sprite icon
+	 * @param type: type of game object
+	 * @return a String of the path
+	 */
+	private static String getIconPath(GameType type)
 	{
 		return "/resources/icons/" + type.toString().toLowerCase() + ".png";
 	}
 
+	/**
+	 * Render a color over the map/units. If the game is in button state attackUnit, the overlay will be red.
+	 * If the game is in buttonState moveUnit, the overlay will be blue.
+	 * @param row: row of the map
+	 * @param column: column of the map
+	 * @param g: graphics object
+	 * @param bState: which ButtonState the game is in
+	 */
 	public static void renderOverlay(int row, int column, Graphics g,
 			ButtonState bState)
 	{
@@ -79,29 +107,20 @@ public class RenderObject
 		renderSquare(row, column, g, color);
 	}
 
+	/**
+	 * Render the player information to be displayed on the top
+	 * @param g: graphics object
+	 * @param player: the current player whose information is displayed
+	 * @param turnNumber: the current turn number
+	 */
 	public static void renderPlayerInfo(Graphics g, Player player, int turnNumber)
 	{
 		g.setColor(Color.black);
 		g.setFont(sanSerif);
-		String color = (player.getColor() == Color.red) ? "Red" : "Blue"; 
-		// This could be better, only works for red and blue
+		String color = player.getPlayerColor().toString(); 
 		String info = "Turn: " + turnNumber + "    Player: " + color + "    Gold: "
 				+ player.getGold() + "    Food: " + player.getFood();
 		g.drawString(info, 25, 25);
 	}
-
-    private static BufferedImage dye(BufferedImage image, Color color, int pixelX, int pixelY)
-    {
-    	int w = image.getWidth();
-    	int h = image.getHeight();
-        BufferedImage dyed = new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = dyed.createGraphics();
-        g.drawImage(image, pixelX, pixelY, null);
-        g.setComposite(AlphaComposite.SrcAtop);
-        g.setColor(color);
-        g.fillRect(pixelX, pixelY, tileSize, tileSize);
-//        g.dispose();
-        return dyed;
-    }
 
 }

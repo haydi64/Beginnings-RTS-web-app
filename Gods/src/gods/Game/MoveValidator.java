@@ -11,7 +11,7 @@ import gods.Entities.Unit;
 public class MoveValidator
 {
 
-	public static boolean moveIsValid(Square from, Square to, Board theBoard, Color color)
+	public static boolean moveIsValid(Square from, Square to, Board theBoard, PlayerColor color)
 	{
 		boolean isValid = true;
 
@@ -22,7 +22,7 @@ public class MoveValidator
 			isValid = false;
 		else if (fromUnit == null)
 			isValid = false;
-		else if (fromUnit.getColor() != color)
+		else if (fromUnit.getPlayerColor() != color)
 			isValid = false;
 		else if (!fromUnit.getActions().contains(Actions.Move))
 			isValid = false;
@@ -36,34 +36,15 @@ public class MoveValidator
 	}
 
 	public static boolean moveIsValid(int fromRow, int fromColumn, int toRow,
-			int toColumn, Board theBoard, Color color)
+			int toColumn, Board theBoard, PlayerColor color)
 	{
-		boolean isValid = true;
-
-		Unit fromUnit = theBoard.getUnitAt(fromRow, fromColumn);
-		Unit toUnit = theBoard.getUnitAt(toRow, toColumn);
 		Square from = new Square(fromRow, fromColumn);
 		Square to = new Square(toRow, toColumn);
-
-		if (!theBoard.squaresInBounds(from, to))
-			isValid = false;
-		else if (fromUnit == null)
-			isValid = false;
-		else if (fromUnit.getColor() != color)
-			isValid = false;
-		else if (!fromUnit.getActions().contains(Actions.Move))
-			isValid = false;
-		else if (fromUnit.getMoveLimit() < from.getManDistance(to))
-			isValid = false;
-		else if (toUnit != null)
-			isValid = false;
-		else if (fromUnit.hasMoved())
-			isValid = false;
-		return isValid;
+		return moveIsValid(from, to, theBoard, color);
 	}
 
 	public static boolean attackIsValid(Square from, Square to,
-			Board theBoard, Color color)
+			Board theBoard, PlayerColor color)
 	{
 		boolean isValid = true;
 
@@ -76,9 +57,9 @@ public class MoveValidator
 			isValid = false;
 		else if (!fromUnit.getActions().contains(Actions.Attack))
 			isValid = false;
-		else if (fromUnit.getColor() != color)
+		else if (fromUnit.getPlayerColor() != color)
 			isValid = false;
-		else if (fromUnit.getColor() == toUnit.getColor())
+		else if (fromUnit.getPlayerColor() == toUnit.getPlayerColor())
 			isValid = false;
 		else if (fromUnit.getRange() < from.getManDistance(to))
 			isValid = false;
@@ -89,7 +70,7 @@ public class MoveValidator
 	}
 
 	public static boolean attackIsValid(int fromRow, int fromColumn, int toRow,
-			int toColumn, Board theBoard, Color color)
+			int toColumn, Board theBoard, PlayerColor color)
 	{
 		boolean isValid = true;
 
@@ -104,9 +85,9 @@ public class MoveValidator
 			isValid = false;
 		else if (!fromUnit.getActions().contains(Actions.Attack))
 			isValid = false;
-		else if (fromUnit.getColor() != color)
+		else if (fromUnit.getPlayerColor() != color)
 			isValid = false;
-		else if (fromUnit.getColor() == toUnit.getColor())
+		else if (fromUnit.getPlayerColor() == toUnit.getPlayerColor())
 			isValid = false;
 		else if (fromUnit.getRange() < from.getManDistance(to))
 			isValid = false;

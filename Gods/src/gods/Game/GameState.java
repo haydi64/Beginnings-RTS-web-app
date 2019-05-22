@@ -16,10 +16,10 @@ public class GameState
 	private ButtonState buttonState;
 	private boolean gameOver;
 
-	public GameState(Color... colors)
+	public GameState(PlayerColor... colors)
 	{
 		players = new ArrayList<Player>();
-		for (Color color : colors) {
+		for (PlayerColor color : colors) {
 			players.add(new Player(color));
 		}
 
@@ -41,7 +41,7 @@ public class GameState
 
 	public void addGameObject(GameObject gameObject)
 	{
-		Color color = gameObject.getColor();
+		PlayerColor color = gameObject.getPlayerColor();
 		Player player = getPlayer(color);
 		if (player != null)
 			player.addObject(gameObject);
@@ -51,7 +51,7 @@ public class GameState
 
 	public void removeGameObject(GameObject gameObject)
 	{
-		Color color = gameObject.getColor();
+		PlayerColor color = gameObject.getPlayerColor();
 		Player player = getPlayer(color);
 		if (player != null)
 			player.removeObject(gameObject);
@@ -60,11 +60,11 @@ public class GameState
 					.println("Player does not exist in GameState.removeGameObject");
 	}
 
-	private Player getPlayer(Color color)
+	private Player getPlayer(PlayerColor color)
 	{
 		Player player = null;
 		for (Player p : players) {
-			if (p.getColor() == color)
+			if (p.getPlayerColor() == color)
 				player = p;
 		}
 		return player;
@@ -78,15 +78,15 @@ public class GameState
 		for (Player player : copy) {
 			if (player.objectsLeft() == 0) {
 				playerLost = true;
-				playerLoses(player.getColor());
+				playerLoses(player.getPlayerColor());
 				System.out.println(
-						"Player " + player.getColor().toString() + " loses");
+						"Player " + player.getPlayerColor().toString() + " loses");
 			}
 		}
 		return playerLost;
 	}
 
-	public void playerLoses(Color color)
+	public void playerLoses(PlayerColor color)
 	{
 		Player player = getPlayer(color);
 		players.remove(player);

@@ -10,7 +10,7 @@ public class Building extends GameObject
 	private List<GameType> listOfUnits;
 	private int goldBonus, foodBonus;
 
-	public Building(GameType type, Color color)
+	public Building(GameType type, PlayerColor color)
 	{
 		super(type, color);
 		listOfUnits = Rules.getTrainableUnits(type);

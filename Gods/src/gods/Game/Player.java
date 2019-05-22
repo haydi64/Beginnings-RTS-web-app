@@ -10,11 +10,11 @@ import gods.Entities.Unit;
 public class Player
 {
 
-	private final Color color;
+	private final PlayerColor color;
 	private List<GameObject> objects;
 	private int gold, food;
 
-	public Player(Color color)
+	public Player(PlayerColor color)
 	{
 		this.color = color;
 		gold = 350;
@@ -22,9 +22,14 @@ public class Player
 		objects = new ArrayList<GameObject>();
 	}
 
+	public PlayerColor getPlayerColor()
+	{
+		return color;
+	}
+	
 	public Color getColor()
 	{
-		return this.color;
+		return color.getColor();
 	}
 	
 	public void addObject(GameObject object)
