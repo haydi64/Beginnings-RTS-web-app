@@ -1,5 +1,6 @@
 package gods.Entities;
 
+import java.io.Serializable;
 import java.util.List;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
@@ -8,7 +9,7 @@ import gods.Game.Rules;
  * Abstract class for all game objects
  *
  */
-public abstract class GameObject
+public abstract class GameObject implements Serializable
 {
 	protected final GameType type;
 	protected final PlayerColor color;

@@ -3,12 +3,13 @@ package gods.View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gods.Board.RenderObject;
 import gods.Board.Square;
 
-public abstract class MyPopupMenu
+public abstract class MyPopupMenu implements Serializable
 {
 	protected Square square;
 	protected List<String> items;
