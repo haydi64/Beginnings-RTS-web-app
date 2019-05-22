@@ -45,7 +45,7 @@ change color of pieces		DONE
 	Add list of buffered images that can be accessed to increase efficiency
 
 Start of turn a popup shows income for that turn and whose turn it is.
-Start menu instead of jumping into the game
+Start menu instead of jumping into the game		DONE
 Ability to save games
 Display battle results
 Different terrain types that affect movement (Terrain enum has all the different types)
