@@ -1,6 +1,5 @@
 package gods.Entities;
 
-import java.awt.Color;
 import java.util.List;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;

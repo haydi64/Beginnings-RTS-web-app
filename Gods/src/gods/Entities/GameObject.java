@@ -1,10 +1,13 @@
 package gods.Entities;
 
-import java.awt.Color;
 import java.util.List;
 import gods.Game.PlayerColor;
 import gods.Game.Rules;
 
+/**
+ * Abstract class for all game objects
+ *
+ */
 public abstract class GameObject
 {
 	protected final GameType type;
@@ -25,6 +28,10 @@ public abstract class GameObject
 		this.defenseRating = Rules.getRating(type, false);
 	}
 
+	/**
+	 * Calculates the effect of a troop with diminishing units
+	 * @return a double of the health multiplier
+	 */
 	protected double healthyFactor()
 	{
 		double result = totalHealth - health;
@@ -34,14 +41,35 @@ public abstract class GameObject
 		return result;
 	}
 
+	/**
+	 * @return the defense strength
+	 */
 	public abstract double calcDefenseStrength();
 
+	/**
+	 * 
+	 * @return the attack strength
+	 */
 	public abstract double calcAttackStrength();
 
+	/**
+	 * 
+	 * @return true if object can counter attack, else false
+	 */
 	protected abstract boolean canCounterAttack();
 
+	/**
+	 * Gets the results from one gameobject attacking another
+	 * @param defender the object being attacked
+	 * @return the result of the attack
+	 */
 	public abstract AttackResult attack(Unit defender);
 
+	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public abstract Unit train(GameType type);
 
 	public abstract Building build(GameType gameType);
@@ -52,9 +80,6 @@ public abstract class GameObject
 				color.toString() + " " + type.toString() + " lost: " + lostTroops);
 		lostTroops = Math.max(0, lostTroops); // in case damage was negative
 		this.health -= lostTroops;
-		// This is done in Game.attackUnit
-		// if (this.healthyUnits <= 0)
-		// deleteUnit();
 	}
 
 	public boolean isDead()
