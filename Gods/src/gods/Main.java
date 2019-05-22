@@ -1,11 +1,6 @@
 package gods;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
-import gods.Board.BufferedImageLoader;
-import gods.Board.RenderObject;
-import gods.Entities.GameType;
+import gods.View.StartMenu;
 import gods.View.Window;
 
 public class Main
@@ -17,8 +12,9 @@ public class Main
 	 */
 	public static void main(String args[])
 	{
-
-
+//		StartMenu menu = new StartMenu();
+//		new Window(GameLoop.WIDTH, GameLoop.HEIGHT, "Game", menu);
+//		menu.start();
 		
 		GameLoop gameLoop = new GameLoop();
 		new Window(GameLoop.WIDTH, GameLoop.HEIGHT, "Game", gameLoop);

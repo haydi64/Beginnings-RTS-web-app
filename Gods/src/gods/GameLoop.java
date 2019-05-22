@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,9 @@ import gods.Entities.GameObject;
 import gods.Entities.Unit;
 import gods.Game.Game;
 import gods.View.Camera;
+import gods.View.Direction;
 import gods.View.KeyInput;
+import gods.View.StartMenu;
 
 /**
  * This class creates the loop that runs the game
@@ -32,11 +35,18 @@ public class GameLoop extends Canvas implements Runnable
 
     private Camera camera;
     private Game game;
+    private Scene currentScene;
+    private KeyListener keyListener;
+    private StartMenu menu;
     
     public GameLoop() {
     	camera = new Camera(0, 0);
     	game = new Game();
-    	this.addKeyListener(new KeyInput(game));
+    	menu = new StartMenu();
+//    	this.addKeyListener(new KeyInput(game));
+    	currentScene = Scene.START;
+    	keyListener = new MenuKeyInput(this);
+    	this.addKeyListener(keyListener);
     }
 	
     /**
@@ -115,11 +125,22 @@ public class GameLoop extends Canvas implements Runnable
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        Graphics2D g2d = (Graphics2D) g;
 
         g.setColor(black);
         g.fillRect(0,0,WIDTH,HEIGHT);
         
+        if(currentScene == Scene.GAME)
+        	renderGame(g);
+        else // current scene == Scene.Start
+        	menu.render(g);
+        	
+        g.dispose();
+        bs.show();
+	}
+	
+	private void renderGame(Graphics g)
+	{
+        Graphics2D g2d = (Graphics2D) g;
         int offset = 150;
 
         //First translate everything to the origin
@@ -135,9 +156,29 @@ public class GameLoop extends Canvas implements Runnable
         g.fillRect(0, 0, WIDTH, 50);
         game.renderInfo(g);
         
-
-        g.dispose();
-        bs.show();
+		
+	}
+	
+	public void cycleButtons(Direction dir)
+	{
+		menu.cycleActions(dir);
+	}
+	
+	public void selectButton()
+	{
+		this.currentScene = menu.selectButton();
+		if(currentScene == Scene.GAME)
+		{
+			this.removeKeyListener(keyListener);
+			keyListener = new KeyInput(game);
+			this.addKeyListener(keyListener);
+		}
+		else if(currentScene == Scene.LOAD)
+		{
+			System.out.println("Load game here");
+			//Game g = new game();
+			//game = Save.restore(g, filepath);
+		}
 	}
 
 }
