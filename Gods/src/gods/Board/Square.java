@@ -1,6 +1,8 @@
 package gods.Board;
 
-public class Square
+import java.io.Serializable;
+
+public class Square implements Serializable
 {
 	private final int column;
 	private final int row;

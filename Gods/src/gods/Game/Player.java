@@ -1,13 +1,14 @@
 package gods.Game;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gods.Entities.Building;
 import gods.Entities.GameObject;
 import gods.Entities.Unit;
 
-public class Player
+public class Player implements Serializable
 {
 
 	private final PlayerColor color;

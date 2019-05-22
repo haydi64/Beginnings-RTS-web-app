@@ -2,14 +2,19 @@ package gods.Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gods.Board.RenderObject;
 import gods.Entities.GameObject;
 import gods.View.ButtonState;
 
-public class GameState
+public class GameState implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6676764703710187720L;
 	private List<Player> players;
 	private int turnNumber;
 	private int currentPlayer;

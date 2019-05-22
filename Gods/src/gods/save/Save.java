@@ -14,9 +14,13 @@ public class Save {
 			
 			catch(IOException ex) 
 			{
+				System.out.println(ex);
+				System.out.println(ex.getMessage());
 				System.out.println("IOException is caught");
+				System.exit(-1);
 			}
 		}
+		
 		public static Game restore(Game newgame, String filename) {
 			try {
 				FileInputStream file = new FileInputStream(filename);

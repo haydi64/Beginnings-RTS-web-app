@@ -2,6 +2,7 @@ package gods.Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gods.GameLoop;
@@ -26,9 +27,13 @@ import gods.save.Save;
  * 
  *
  */
-public class Game implements java.io.Serializable
+public class Game implements Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6047979186423690212L;
 	private Board theBoard;
 	private GameState state;
 	private MyPopupMenu popup;
