@@ -319,6 +319,6 @@ public class Game implements Serializable
 		state.setButtonState(buttonState);
 	}
 	public void save() {
-		Save.save(this, "save.ser");
+		Save.save(this, "src/resources/saves/save.ser");
 	}
 }

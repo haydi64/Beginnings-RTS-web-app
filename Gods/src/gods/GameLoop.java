@@ -178,7 +178,7 @@ public class GameLoop extends Canvas implements Runnable
 		{
 			System.out.println("Load game here");
 			Game g = null;
-			game = Save.restore(g, "save.ser");
+			game = Save.restore(g, "src/resources/saves/save.ser");
 			currentScene = Scene.GAME;
 			//Game g = new game();
 			//game = Save.restore(g, filepath);
