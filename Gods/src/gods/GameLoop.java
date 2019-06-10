@@ -157,6 +157,7 @@ public class GameLoop extends Canvas implements Runnable
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, WIDTH, 50);
         game.renderInfo(g);
+        game.renderMessage(g);
         
 		
 	}

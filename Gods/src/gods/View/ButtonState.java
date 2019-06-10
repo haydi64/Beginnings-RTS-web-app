@@ -2,5 +2,5 @@ package gods.View;
 
 public enum ButtonState
 {
-	Normal, MoveUnit, AttackUnit, Popup
+	Normal, MoveUnit, AttackUnit, Popup, Message
 }

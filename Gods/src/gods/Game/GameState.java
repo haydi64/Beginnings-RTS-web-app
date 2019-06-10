@@ -14,7 +14,6 @@ public class GameState implements Serializable
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6676764703710187720L;
 	private List<Player> players;
 	private int turnNumber;
 	private int currentPlayer;
@@ -30,7 +29,7 @@ public class GameState implements Serializable
 
 		currentPlayer = 0;
 		turnNumber = 1;
-		buttonState = ButtonState.Normal;
+		buttonState = ButtonState.Message;
 		gameOver = false;
 	}
 
