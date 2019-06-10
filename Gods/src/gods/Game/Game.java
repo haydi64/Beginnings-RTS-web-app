@@ -191,8 +191,8 @@ public class Game implements Serializable
 					state.getButtonState());
 		if (popup != null)
 			popup.render(g);
-		if (message != null)
-			message.render(g);
+//		if (message != null)
+//			message.render(g);
 		if (state.isGameOver()) {
 			// TEST
 			g.setColor(Color.DARK_GRAY);
@@ -225,10 +225,16 @@ public class Game implements Serializable
 		String text = "Player  " + player.getPlayerColor().toString()
 				+ ":     Gold  +" + income[0] + " Food  +" + income[1];
 		int height = GameLoop.HEIGHT / 3;
-		int offsetX = 100;
 		int width = 600;
-		return new Message(offsetX, height - offsetX, width, height, 24, Color.gray,
+		int offsetX = (GameLoop.WIDTH / 2) - (width / 2);
+		return new Message(offsetX, height, width, height, 24, Color.gray,
 				text);
+	}
+	
+	public void renderMessage(Graphics g)
+	{
+		if(message != null)
+			message.render(g);
 	}
 
 	public void addPopup()
