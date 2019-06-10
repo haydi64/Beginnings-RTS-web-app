@@ -44,11 +44,11 @@ change color of pieces		DONE
 **REFACTOR
 	Add list of buffered images that can be accessed to increase efficiency		DONE
 
-Start of turn a popup shows income for that turn and whose turn it is.		HENRY
+Start of turn a popup shows income for that turn and whose turn it is.		DONE
 Start menu instead of jumping into the game		DONE
 Ability to save games		DONE
 Display battle results
-Different terrain types that affect movement (Terrain enum has all the different types)
+Different terrain types that affect movement (Terrain enum has all the different types)		HENRY
 Add defensive bonuses for terrain
 Add more units/buildings
 Building restrictions
