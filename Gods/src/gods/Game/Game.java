@@ -5,10 +5,12 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import gods.GameLoop;
 import gods.Board.Board;
 import gods.Board.RenderObject;
 import gods.Board.Square;
+import gods.Board.Terrain;
 import gods.Entities.Actions;
 import gods.Entities.AttackResult;
 import gods.Entities.Building;
@@ -54,6 +56,16 @@ public class Game implements Serializable
 	public Game()
 	{
 		this(new Board(20, 20));
+		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
+		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
+		// this.addUnit(3, 3, new Unit(GameType.SPEAR, PlayerColor.blue));
+		this.addUnit(18, 18, new Unit(GameType.VILLAGER, PlayerColor.BLUE));
+		this.addUnit(18, 17, new Unit(GameType.SWORD, PlayerColor.BLUE));
+	}
+	
+	public Game(Map<Square, Terrain> terrainMap)
+	{
+		this(new Board(20, 20, terrainMap));
 		this.addUnit(2, 2, new Unit(GameType.VILLAGER, PlayerColor.RED));
 		this.addUnit(1, 2, new Unit(GameType.SWORD, PlayerColor.RED));
 		// this.addUnit(3, 3, new Unit(GameType.SPEAR, PlayerColor.blue));

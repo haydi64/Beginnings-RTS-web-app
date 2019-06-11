@@ -7,10 +7,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import gods.Board.BufferedImageLoader;
 import gods.Board.RenderObject;
 import gods.Board.Square;
+import gods.Board.Terrain;
 import gods.Entities.Actions;
 import gods.Entities.Building;
 import gods.Entities.GameObject;
@@ -43,7 +48,10 @@ public class GameLoop extends Canvas implements Runnable
     public GameLoop() {
     	RenderObject.initializeIcons();
     	camera = new Camera(0, 0);
-    	game = new Game();
+//    	game = new Game();
+        BufferedImageLoader loader = new BufferedImageLoader();
+        BufferedImage map = loader.loadImage("/resources/maps/map1.png");
+    	game = new Game(loadMap(map));
     	menu = new StartMenu();
 //    	this.addKeyListener(new KeyInput(game));
     	currentScene = Scene.START;
@@ -185,6 +193,26 @@ public class GameLoop extends Canvas implements Runnable
 			//Game g = new game();
 			//game = Save.restore(g, filepath);
 		}
+	}
+	
+	private Map<Square, Terrain> loadMap(BufferedImage img)
+	{
+		Map<Square, Terrain> terrainMap = new HashMap<Square, Terrain>();
+
+        int w = img.getWidth();
+        int h = img.getHeight();
+        for(int xx = 0; xx < w; xx++){
+            for(int yy = 00; yy < h; yy++){
+                Color color = new Color(img.getRGB(xx,yy));
+                Terrain terrain = null;
+                for(Terrain item: Terrain.values()){
+                    if(color.equals(item.getColor()))
+                    	terrain = item;
+                }
+                terrainMap.put(new Square(xx, yy), terrain);
+            }
+        }
+		return terrainMap;
 	}
 
 }

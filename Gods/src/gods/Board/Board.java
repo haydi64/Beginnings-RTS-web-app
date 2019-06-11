@@ -23,6 +23,7 @@ public class Board implements Serializable
 	private Square selectedSquare;
 	private Map<Square, Unit> unitMap;
 	private Map<Square, Building> buildingMap;
+	private Map<Square, Terrain> terrainMap;
 
 	public Board(int rows, int columns)
 	{
@@ -30,7 +31,18 @@ public class Board implements Serializable
 		this.columns = columns;
 		unitMap = new HashMap<Square, Unit>();
 		buildingMap = new HashMap<Square, Building>();
+		terrainMap = new HashMap<Square, Terrain>();
+		
+		for(int i = 0; i < rows; i++)
+			for(int j = 0; j < columns; j++)
+				terrainMap.put(new Square(i, j), Terrain.Plain);
 		selectedSquare = new Square(0, 0);
+	}
+	
+	public Board(int rows, int columns, Map<Square, Terrain> terrainMap)
+	{
+		this(rows, columns);
+		this.terrainMap = terrainMap;
 	}
 
 	/**
@@ -211,7 +223,8 @@ public class Board implements Serializable
 
 	public Terrain getTerrainAt(int row, int column)
 	{
-		return Terrain.Plain;
+//		return Terrain.Plain;
+		return terrainMap.get(new Square(row, column));
 	}
 
 	public Square getSelectedSquare()
